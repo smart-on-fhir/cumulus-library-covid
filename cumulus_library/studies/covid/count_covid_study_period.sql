@@ -1,58 +1,86 @@
-create TABLE covid__study_period AS
-    select distinct V.variant_era, S.*, A.age_group
-    from core__study_period S
-        , covid__define_period V
-        , covid__define_age A
-    where S.age_at_visit = A.age
-      and s.gender in ('female','male')
-      and S.author_date between V.variant_start and V.variant_end
-      and S.start_date  between V.variant_start and V.variant_end
-      and diff_enc_note_days between -30 and 30
-;
+CREATE TABLE covid__study_period AS
+SELECT DISTINCT
+    v.variant_era,
+    s.start_date,
+    s.start_week,
+    s.start_month,
+    s.end_date,
+    s.age_at_visit,
+    s.author_date,
+    s.author_week,
+    s.author_month,
+    s.author_year,
+    s.gender,
+    s.race_display,
+    s.subject_ref,
+    s.encounter_ref,
+    s.doc_ref,
+    s.diff_enc_note_days,
+    s.enc_class_code,
+    s.doc_type_code,
+    s.doc_type_display,
+    s.ed_note,
+    a.age_group
+FROM core__study_period AS s,
+    covid__define_period AS v,
+    covid__define_age AS a
+WHERE
+    s.age_at_visit = a.age
+    AND s.gender IN ('female', 'male')
+    AND s.author_date BETWEEN v.variant_start AND v.variant_end
+    AND s.start_date BETWEEN v.variant_start AND v.variant_end
+    AND s.diff_enc_note_days BETWEEN -30 AND 30;
 
 CREATE TABLE covid__meta_date AS
-    select min(start_date) as min_date, max(end_date) as max_date
-FROM covid__study_period
-;
+SELECT
+    min(start_date) AS min_date,
+    max(end_date) AS max_date
+FROM covid__study_period;
 
 -- NOTICE! this is the study period BEFORE covid for retrospective comparison to FLU.
-CREATE table covid__study_period_2016 as
-with period_2016 as(
-      select * FROM  core__study_period P where ed_note
+CREATE TABLE covid__study_period_2016 AS
+WITH period_2016 AS (
+    SELECT * FROM core__study_period WHERE ed_note -- noqa: AM04
 ),
-period_2020 as (
-    select distinct
-          period_2016.*
-        , case when covid__study_period.variant_era is not null
-                then covid__study_period.variant_era
-                else 'before-covid' end as variant_era
-        , case when covid__define_age.age_group is not null
-            then covid__define_age.age_group else '>21' end as age_group
-    FROM  period_2016
-    left join covid__define_age on period_2016.age_at_visit = covid__define_age.age
-    left join covid__study_period on period_2016.encounter_ref = covid__study_period.encounter_ref
-)
-select * from period_2020
-;
 
-create table covid__count_study_period as
-with powerset as (
-    select
-          variant_era
-        , start_month
-        , ed_note
-        , gender
-        , age_group
-        , race_display
-    ,count(distinct subject_ref) as cnt_subject
-    ,count(distinct encounter_ref) as cnt_encounter
-    from    covid__study_period
-    where   start_month between date('2020-03-01') and date('2022-06-01')
-    group by cube(variant_era, start_month, ed_note, gender, age_group, race_display)
+period_2020 AS (
+    SELECT DISTINCT
+        period_2016.*,
+        coalesce(covid__study_period.variant_era, 'before-covid') AS variant_era,
+        coalesce(covid__define_age.age_group, '>21') AS age_group
+    FROM period_2016
+    LEFT JOIN covid__define_age ON period_2016.age_at_visit = covid__define_age.age
+    LEFT JOIN
+        covid__study_period
+        ON period_2016.encounter_ref = covid__study_period.encounter_ref
 )
-    select   variant_era, start_month, ed_note, gender, age_group, race_display
-            ,cnt_encounter as cnt
-    from powerset
-    where cnt_subject >= 10
-    order by start_month asc, cnt_encounter desc
-;
+
+SELECT * FROM period_2020;
+
+CREATE TABLE covid__count_study_period AS
+WITH powerset AS (
+    SELECT
+        variant_era,
+        start_month,
+        ed_note,
+        gender,
+        age_group,
+        race_display,
+        count(DISTINCT subject_ref) AS cnt_subject,
+        count(DISTINCT encounter_ref) AS cnt_encounter
+    FROM covid__study_period
+    WHERE start_month BETWEEN date('2020-03-01') AND date('2022-06-01')
+    GROUP BY cube(variant_era, start_month, ed_note, gender, age_group, race_display)
+)
+
+SELECT
+    variant_era,
+    start_month,
+    ed_note,
+    gender,
+    age_group,
+    race_display,
+    cnt_encounter AS cnt
+FROM powerset
+WHERE cnt_subject >= 10
+ORDER BY start_month ASC, cnt_encounter DESC;

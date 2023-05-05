@@ -1,43 +1,50 @@
 -- ############################################################################
 -- Table COVID19 Diagnosis
 
-create TABLE covid__dx as
-select distinct
-      C.subject_ref
-    , C.encounter_ref
-    , C.cond_code.coding[1].code as cond_code
-    , C.recorded_week as cond_week
-    , S.enc_class_code
-    , S.age_at_visit
-    , S.ed_note
-    , S.variant_era
-from core__condition C
-    , covid__study_period S
-    , covid__define_dx DX
-where C.cond_code.coding[1].code = DX.code
-  and C.encounter_ref = S.encounter_ref
-;
+CREATE TABLE covid__dx AS
+SELECT DISTINCT
+    c.subject_ref,
+    c.encounter_ref,
+    c.cond_code.coding[1].code AS cond_code, -- noqa: LT01,RF02
+    c.recorded_week AS cond_week,
+    s.enc_class_code,
+    s.age_at_visit,
+    s.ed_note,
+    s.variant_era
+FROM core__condition AS c,
+    covid__study_period AS s,
+    covid__define_dx AS dx
+WHERE
+    c.cond_code.coding[1].code = dx.code -- noqa: LT01,RF02
+    AND c.encounter_ref = s.encounter_ref;
 
-create or replace view covid__count_dx_week as
-with powerset as (
-    select    count(distinct subject_ref)   AS cnt_subject
-            , count(distinct encounter_ref) AS cnt_encounter
-            , cond_week
-            , enc_class_code
-            , age_at_visit
-            , ed_note
-            , variant_era
-    from	covid__dx  DX
-    group by CUBE(
-              cond_week
-            , enc_class_code
-            , age_at_visit
-            , ed_note
-            , variant_era)
+CREATE OR REPLACE VIEW covid__count_dx_week AS
+WITH powerset AS (
+    SELECT
+        count(DISTINCT subject_ref) AS cnt_subject,
+        count(DISTINCT encounter_ref) AS cnt_encounter,
+        cond_week,
+        enc_class_code,
+        age_at_visit,
+        ed_note,
+        variant_era
+    FROM covid__dx
+    GROUP BY
+        cube(
+            cond_week,
+            enc_class_code,
+            age_at_visit,
+            ed_note,
+            variant_era
+        )
 )
-select cnt_encounter as cnt
-        , cond_week, enc_class_code, age_at_visit, ed_note, variant_era
-from powerset
-where cnt_subject >= 10 order by cnt desc
-;
 
+SELECT
+    cnt_encounter AS cnt,
+    cond_week,
+    enc_class_code,
+    age_at_visit,
+    ed_note,
+    variant_era
+FROM powerset
+WHERE cnt_subject >= 10 ORDER BY cnt DESC;

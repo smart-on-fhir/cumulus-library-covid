@@ -1,4 +1,3 @@
-
 --desc covid_symptom__nlp_results;
 --id                  	string
 --docref_id           	string
@@ -22,74 +21,81 @@
 -- @covid_define_symptom_cui
 --
 
-create table covid__symptom as
-with mention AS
-(
-    select concept, concept.cui
-        , match.text as match_text
-        , subject_id
-        , encounter_id
-        , docref_id
-    from covid_symptom__nlp_results
-    ,UNNEST(match.conceptattributes) t (concept)
+CREATE TABLE covid__symptom AS
+WITH mention AS (
+    SELECT
+        t.concept,
+        t.concept.cui,
+        nr.match.text AS match_text,
+        nr.subject_id,
+        nr.encounter_id,
+        nr.docref_id
+    FROM covid_symptom__nlp_results AS nr,
+        UNNEST(match.conceptattributes) AS t (concept)
 )
-     select distinct
-              S.variant_era
-            , S.subject_ref
-            , S.encounter_ref
-            , M.docref_id
-	        , DEF.PREF as symptom_display
-	        , S.start_date as start_date
-	        , S.end_date as end_date
-	        , S.author_week
-	        , S.author_month
-	        , S.age_group
-	        , S.gender
-	        , S.race_display
-            , S.enc_class_code
-            , S.ed_note
-     from	  mention as M
-            , covid__define_symptom_cui as DEF
-            , covid__study_period as S
-     where 	concept.cui = DEF.CUI
-         and S.encounter_ref = concat('Encounter/', M.encounter_id)
-;
+
+SELECT DISTINCT
+    s.variant_era,
+    s.subject_ref,
+    s.encounter_ref,
+    m.docref_id,
+    def.pref AS symptom_display,
+    s.start_date AS start_date,
+    s.end_date AS end_date,
+    s.author_week,
+    s.author_month,
+    s.age_group,
+    s.gender,
+    s.race_display,
+    s.enc_class_code,
+    s.ed_note
+FROM mention AS m,
+    covid__define_symptom_cui AS def,
+    covid__study_period AS s
+WHERE
+    concept.cui = def.cui
+    AND s.encounter_ref = CONCAT('Encounter/', m.encounter_id);
 
 
-create TABLE covid__symptom_icd10 as
-with temp_period as (
-    select
-         variant_era
-        ,subject_ref
-        ,encounter_ref
-        ,start_date
-        ,author_week
-        ,author_month
-        ,age_group
-        ,gender
-        ,race_display
-        ,enc_class_code
-        ed_note
-    from covid__study_period
+CREATE TABLE covid__symptom_icd10 AS
+WITH temp_period AS (
+    SELECT
+        variant_era,
+        subject_ref,
+        encounter_ref,
+        start_date,
+        author_week,
+        author_month,
+        age_group,
+        gender,
+        race_display,
+        enc_class_code
+        AS ed_note
+    FROM covid__study_period
 ),
-icd10_list as
-(
-    select distinct code as icd10_code
-        , concat('ICD10:',pref) as icd10_display
-        from covid__define_symptom where code_system='ICD10CM'
+
+icd10_list AS (
+    SELECT DISTINCT
+        code AS icd10_code,
+        CONCAT('ICD10:', pref) AS icd10_display
+    FROM covid__define_symptom WHERE code_system = 'ICD10CM'
     UNION
-    select distinct code as icd10_code
-        , 'ICD10:Influenza' as icd10_display from covid__define_flu
+    SELECT DISTINCT
+        code AS icd10_code,
+        'ICD10:Influenza' AS icd10_display
+    FROM covid__define_flu
 )
-select distinct temp_period.*
-    , icd10_list.icd10_code
-    , icd10_list.icd10_display
-from  temp_period
-    , core__condition V
-    , icd10_list
-where temp_period.encounter_ref = V.encounter_ref
-and V.cond_code.coding[1].code = icd10_code
-;
+
+SELECT DISTINCT
+    temp_period.*,
+    icd10_list.icd10_code,
+    icd10_list.icd10_display
+FROM temp_period,
+    core__condition AS v,
+    icd10_list
+WHERE
+    temp_period.encounter_ref = v.encounter_ref
+    AND v.cond_code.coding[1].code = icd10_list.icd10_code; --noqa: RF02,LT01
 
 
 
@@ -101,43 +107,43 @@ and V.cond_code.coding[1].code = icd10_code
 -- ############################################################################
 --  COVID19 Symptoms by Variant Era
 --
-create or replace view covid__count_symptom_week AS
-    with powerset as (
-    select
-          count(distinct subject_ref)   as cnt_subject
-        , count(distinct encounter_ref) as cnt_encounter
-        , symptom_display
-        , variant_era
-        , author_week
-        , age_group
-        , gender
-        , race_display
-        , enc_class_code
-        , ed_note
-    from covid__symptom
-    group by CUBE(
-          symptom_display
-        , variant_era
-        , author_week
-        , age_group
-        , gender
-        , race_display
-        , enc_class_code
-        , ed_note)
+CREATE OR REPLACE VIEW covid__count_symptom_week AS
+WITH powerset AS (
+    SELECT
+        COUNT(DISTINCT subject_ref) AS cnt_subject,
+        COUNT(DISTINCT encounter_ref) AS cnt_encounter,
+        symptom_display,
+        variant_era,
+        author_week,
+        age_group,
+        gender,
+        race_display,
+        enc_class_code,
+        ed_note
+    FROM covid__symptom
+    GROUP BY
+        CUBE(
+            symptom_display,
+            variant_era,
+            author_week,
+            age_group,
+            gender,
+            race_display,
+            enc_class_code,
+            ed_note
+        )
 )
-select
-      cnt_encounter as cnt
-    , symptom_display
-    , variant_era
-    , author_week
-    , age_group
-    , gender
-    , race_display
-    , enc_class_code
-    , ed_note
-from powerset
-where cnt_subject >= 10
-order by author_week, cnt_encounter desc;
 
-
-
+SELECT
+    cnt_encounter AS cnt,
+    symptom_display,
+    variant_era,
+    author_week,
+    age_group,
+    gender,
+    race_display,
+    enc_class_code,
+    ed_note
+FROM powerset
+WHERE cnt_subject >= 10
+ORDER BY author_week ASC, cnt_encounter DESC;
