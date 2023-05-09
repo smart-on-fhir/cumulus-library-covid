@@ -3,7 +3,7 @@
 
 -- PCR test codes
 --
-CREATE OR REPLACE VIEW covid__site_pcr AS
+CREATE OR REPLACE VIEW covid_symptom__site_pcr AS
 SELECT
     t.from_system,
     t.from_code,
@@ -99,7 +99,7 @@ FROM
 
 -- Emergency Department Notes
 --
-CREATE OR REPLACE VIEW covid__site_ed_note AS
+CREATE OR REPLACE VIEW covid_symptom__site_ed_note AS
 SELECT
     t.from_system,
     t.from_code,

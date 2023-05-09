@@ -14,7 +14,7 @@
 -- ############################################################################
 -- COVID19 Diagnosis
 
-CREATE OR REPLACE VIEW covid__define_dx AS
+CREATE OR REPLACE VIEW covid_symptom__define_dx AS
 SELECT
     t.code_system,
     t.code,
@@ -29,7 +29,7 @@ FROM
 -- ############################################################################
 -- COVID19 PCR
 
-CREATE OR REPLACE VIEW covid__define_pcr AS
+CREATE OR REPLACE VIEW covid_symptom__define_pcr AS
 SELECT
     t.code_system,
     t.code,
@@ -49,7 +49,7 @@ FROM
         )
     ) AS t (code_system, code, display);
 
-CREATE OR REPLACE VIEW covid__define_pcr_result AS
+CREATE OR REPLACE VIEW covid_symptom__define_pcr_result AS
 SELECT
     t.code_system,
     t.code,
@@ -72,7 +72,7 @@ FROM
 -- ############################################################################
 -- COVID19 Symptom CUI (UMLS Unified Medical Language System)
 
-CREATE OR REPLACE VIEW covid__define_symptom_cui AS
+CREATE OR REPLACE VIEW covid_symptom__define_symptom_cui AS
 SELECT
     t.cui,
     t.pref
@@ -103,7 +103,7 @@ FROM (
 AS t (cui, pref);
 
 -- Influenza symptoms are a subset of the COVID symptoms, and important as a comparison.
-CREATE OR REPLACE VIEW covid__define_flu AS
+CREATE OR REPLACE VIEW covid_symptom__define_flu AS
 SELECT DISTINCT
     c.code,
     c.code_display
@@ -121,7 +121,7 @@ WHERE
 -- ############################################################################
 -- COVID19 Age Groups (primarily for Suicidality study)
 
-CREATE OR REPLACE VIEW covid__define_age AS
+CREATE OR REPLACE VIEW covid_symptom__define_age AS
 SELECT
     t.age,
     t.age_group
@@ -160,7 +160,7 @@ FROM
 -- Delta era as June 21, 2021 to December 19, 2021
 -- Omicron era as December 20, 2021 onwards.
 
-CREATE OR REPLACE VIEW covid__define_period AS
+CREATE OR REPLACE VIEW covid_symptom__define_period AS
 SELECT
     t.variant_era,
     t.variant_start,

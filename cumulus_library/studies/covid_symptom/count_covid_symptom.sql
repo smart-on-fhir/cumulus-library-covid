@@ -21,7 +21,7 @@
 -- @covid_define_symptom_cui
 --
 
-CREATE TABLE covid__symptom AS
+CREATE TABLE covid_symptom__symptom AS
 WITH mention AS (
     SELECT
         t.concept,
@@ -50,14 +50,14 @@ SELECT DISTINCT
     s.enc_class_code,
     s.ed_note
 FROM mention AS m,
-    covid__define_symptom_cui AS def,
-    covid__study_period AS s
+    covid_symptom__define_symptom_cui AS def,
+    covid_symptom__study_period AS s
 WHERE
     concept.cui = def.cui
     AND s.encounter_ref = CONCAT('Encounter/', m.encounter_id);
 
 
-CREATE TABLE covid__symptom_icd10 AS
+CREATE TABLE covid_symptom__symptom_icd10 AS
 WITH temp_period AS (
     SELECT
         variant_era,
@@ -71,19 +71,19 @@ WITH temp_period AS (
         race_display,
         enc_class_code
         AS ed_note
-    FROM covid__study_period
+    FROM covid_symptom__study_period
 ),
 
 icd10_list AS (
     SELECT DISTINCT
         code AS icd10_code,
         CONCAT('ICD10:', pref) AS icd10_display
-    FROM covid__define_symptom WHERE code_system = 'ICD10CM'
+    FROM covid_symptom__define_symptom WHERE code_system = 'ICD10CM'
     UNION
     SELECT DISTINCT
         code AS icd10_code,
         'ICD10:Influenza' AS icd10_display
-    FROM covid__define_flu
+    FROM covid_symptom__define_flu
 )
 
 SELECT DISTINCT
@@ -107,7 +107,7 @@ WHERE
 -- ############################################################################
 --  COVID19 Symptoms by Variant Era
 --
-CREATE OR REPLACE VIEW covid__count_symptom_week AS
+CREATE OR REPLACE VIEW covid_symptom__count_symptom_week AS
 WITH powerset AS (
     SELECT
         COUNT(DISTINCT subject_ref) AS cnt_subject,
@@ -120,7 +120,7 @@ WITH powerset AS (
         race_display,
         enc_class_code,
         ed_note
-    FROM covid__symptom
+    FROM covid_symptom__symptom
     GROUP BY
         CUBE(
             symptom_display,

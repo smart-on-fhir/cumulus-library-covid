@@ -74,22 +74,28 @@ def test_manifest_data(manifest_key, raises):
 
 
 @pytest.mark.parametrize(
-    "schema,verbose,raises",
+    "schema,verbose,query_res,raises",
     [
-        ("schema", True, does_not_raise()),
-        ("schema", False, does_not_raise()),
-        ("schema", None, does_not_raise()),
-        (None, True, pytest.raises(ValueError)),
+        ("schema", True, "test__table", does_not_raise()),
+        ("schema", False, "test__table", does_not_raise()),
+        ("schema", None, "test__table", does_not_raise()),
+        (None, True, "test__table", pytest.raises(ValueError)),
+        ("schema", None, "test__etl_table", does_not_raise()),
+        ("schema", None, "test__nlp_table", does_not_raise()),
+        ("schema", None, "test__lib_table", does_not_raise()),
     ],
 )
 @mock.patch("cumulus_library.helper.query_console_output")
-def test_clean_study(mock_output, schema, verbose, raises):
+def test_clean_study(mock_output, schema, verbose, query_res, raises):
     with raises:
         mock_cursor = mock.MagicMock()
-        mock_cursor.__iter__.return_value = [["test__table"]]
+        mock_cursor.__iter__.return_value = [[query_res]]
         parser = StudyManifestParser("./tests/test_data/study_valid/")
         tables = parser.clean_study(mock_cursor, schema, verbose)
-        assert tables == [["test__table", "VIEW"]]
+        if query_res != "test__table":
+            assert tables == []
+        else:
+            assert tables == [["test__table", "VIEW"]]
         assert mock_output.is_called()
 
 
@@ -105,6 +111,17 @@ def test_clean_study(mock_output, schema, verbose, raises):
             "./tests/test_data/study_python_no_subclass/",
             True,
             pytest.raises(StudyManifestParsingError),
+        ),
+        ("./tests/test_data/study_invalid_no_dunder/", True, pytest.raises(SystemExit)),
+        (
+            "./tests/test_data/study_invalid_two_dunder/",
+            True,
+            pytest.raises(SystemExit),
+        ),
+        (
+            "./tests/test_data/study_invalid_reserved_word/",
+            True,
+            pytest.raises(SystemExit),
         ),
     ],
 )

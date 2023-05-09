@@ -1,7 +1,7 @@
 -- ############################################################################
 -- Table COVID19 Diagnosis
 
-CREATE TABLE covid__dx AS
+CREATE TABLE covid_symptom__dx AS
 SELECT DISTINCT
     c.subject_ref,
     c.encounter_ref,
@@ -12,13 +12,13 @@ SELECT DISTINCT
     s.ed_note,
     s.variant_era
 FROM core__condition AS c,
-    covid__study_period AS s,
-    covid__define_dx AS dx
+    covid_symptom__study_period AS s,
+    covid_symptom__define_dx AS dx
 WHERE
     c.cond_code.coding[1].code = dx.code -- noqa: LT01,RF02
     AND c.encounter_ref = s.encounter_ref;
 
-CREATE OR REPLACE VIEW covid__count_dx_week AS
+CREATE OR REPLACE VIEW covid_symptom__count_dx_week AS
 WITH powerset AS (
     SELECT
         count(DISTINCT subject_ref) AS cnt_subject,
@@ -28,7 +28,7 @@ WITH powerset AS (
         age_at_visit,
         ed_note,
         variant_era
-    FROM covid__dx
+    FROM covid_symptom__dx
     GROUP BY
         cube(
             cond_week,

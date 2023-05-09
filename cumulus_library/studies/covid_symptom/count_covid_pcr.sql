@@ -5,7 +5,7 @@
 -- Study Period: @core_study_period_covid
 -- PCR Test Codes: @covid_define_pcr, @map_lab_code
 
-CREATE TABLE covid__pcr AS
+CREATE TABLE covid_symptom__pcr AS
 SELECT DISTINCT
     upper(o.lab_result.display) AS covid_pcr_result_display,
     o.lab_result AS covid_pcr_result,
@@ -28,10 +28,10 @@ SELECT DISTINCT
     o.encounter_ref,
     o.observation_ref
 FROM core__observation_lab AS o,
-    covid__define_pcr AS pcr,
-    covid__define_period AS p,
-    covid__site_pcr,
-    covid__study_period AS s
+    covid_symptom__define_pcr AS pcr,
+    covid_symptom__define_period AS p,
+    covid_symptom__site_pcr,
+    covid_symptom__study_period AS s
 WHERE
     (s.encounter_ref = o.encounter_ref)
     AND (s.variant_era = p.variant_era)
@@ -45,28 +45,28 @@ WHERE
 -- ############################################################################
 
 
-CREATE OR REPLACE VIEW covid__count_pcr_week AS
+CREATE OR REPLACE VIEW covid_symptom__count_pcr_week AS
 WITH powerset AS (
     SELECT
-        count(DISTINCT covid__pcr.subject_ref) AS cnt_subject,
-        count(DISTINCT covid__pcr.encounter_ref) AS cnt_encounter,
+        count(DISTINCT cp.subject_ref) AS cnt_subject,
+        count(DISTINCT cp.encounter_ref) AS cnt_encounter,
         upper(covid_pcr_result.display) AS covid_pcr_result_display,
-        covid__pcr.covid_pcr_week,
-        covid__pcr.variant_era,
-        covid__pcr.ed_note,
-        covid__pcr.age_at_visit,
-        covid__pcr.gender,
-        covid__pcr.race_display
-    FROM covid__pcr
+        cp.covid_pcr_week,
+        cp.variant_era,
+        cp.ed_note,
+        cp.age_at_visit,
+        cp.gender,
+        cp.race_display
+    FROM covid__pcr AS cp
     GROUP BY
         cube(
-            covid__pcr.covid_pcr_result,
-            covid__pcr.covid_pcr_week,
-            covid__pcr.variant_era,
-            covid__pcr.ed_note,
-            covid__pcr.age_at_visit,
-            covid__pcr.gender,
-            covid__pcr.race_display
+            cp.covid_pcr_result,
+            cp.covid_pcr_week,
+            cp.variant_era,
+            cp.ed_note,
+            cp.age_at_visit,
+            cp.gender,
+            cp.race_display
         )
 )
 

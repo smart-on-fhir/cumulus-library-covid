@@ -1,4 +1,4 @@
-CREATE TABLE covid__prevalence_ed AS
+CREATE TABLE covid_symptom__prevalence_ed AS
 WITH from_period AS (
     SELECT DISTINCT
         encounter_ref,
@@ -10,7 +10,7 @@ WITH from_period AS (
         age_at_visit,
         age_group,
         variant_era
-    FROM covid__study_period
+    FROM covid_symptom__study_period
     WHERE ed_note
 ),
 
@@ -47,7 +47,7 @@ SELECT * FROM join_2020
 ORDER BY author_week, variant_era;
 
 
-CREATE OR REPLACE VIEW covid__count_prevalence_ed_month AS
+CREATE OR REPLACE VIEW covid_symptom__count_prevalence_ed_month AS
 WITH powerset AS (
     SELECT
         COUNT(DISTINCT encounter_ref) AS cnt,
@@ -60,7 +60,7 @@ WITH powerset AS (
         variant_era,
         author_month,
         age_group
-    FROM covid__prevalence_ed
+    FROM covid_symptom__prevalence_ed
     GROUP BY
         CUBE(
             covid_dx,

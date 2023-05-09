@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW covid__define_symptom AS
+CREATE OR REPLACE VIEW covid_symptom__define_symptom AS
 SELECT
     t.cui,
     t.tui,

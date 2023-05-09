@@ -4,8 +4,8 @@ from cumulus_library.schema import counts
 
 def count_covid_prevalence_ed_month():
     """Convenience function for hand count verification"""
-    view_name = "count_covid_prevalence_ed_month"
-    from_table = "covid_prevalence_ed"
+    view_name = "covid_symptom_count_prevalence_ed_month"
+    from_table = "covid_symptom__prevalence_ed"
     cols = [
         "covid_icd10",
         "covid_pcr_result",
