@@ -40,7 +40,8 @@ join_2020 AS (
     LEFT JOIN covid_symptom__dx AS dx ON p.encounter_ref = dx.encounter_ref
     LEFT JOIN covid_symptom__pcr AS pcr ON p.encounter_ref = pcr.encounter_ref
     LEFT JOIN covid_symptom__symptom AS nlp ON p.encounter_ref = nlp.encounter_ref
-    LEFT JOIN covid_symptom__symptom_icd10 AS icd10 ON p.encounter_ref = icd10.encounter_ref
+    LEFT JOIN covid_symptom__symptom_icd10 AS icd10
+        ON p.encounter_ref = icd10.encounter_ref
 )
 
 SELECT * FROM join_2020
