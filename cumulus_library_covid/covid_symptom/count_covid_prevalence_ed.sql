@@ -37,10 +37,11 @@ join_2020 AS (
         COALESCE(nlp.symptom_display, 'No Symptom') AS covid_symptom,
         COALESCE(icd10.icd10_display, 'No Symptom ICD10') AS symptom_icd10_display
     FROM from_period AS p
-    LEFT JOIN covid__dx AS dx ON p.encounter_ref = dx.encounter_ref
-    LEFT JOIN covid__pcr AS pcr ON p.encounter_ref = pcr.encounter_ref
-    LEFT JOIN covid__symptom AS nlp ON p.encounter_ref = nlp.encounter_ref
-    LEFT JOIN covid__symptom_icd10 AS icd10 ON p.encounter_ref = icd10.encounter_ref
+    LEFT JOIN covid_symptom__dx AS dx ON p.encounter_ref = dx.encounter_ref
+    LEFT JOIN covid_symptom__pcr AS pcr ON p.encounter_ref = pcr.encounter_ref
+    LEFT JOIN covid_symptom__symptom AS nlp ON p.encounter_ref = nlp.encounter_ref
+    LEFT JOIN covid_symptom__symptom_icd10 AS icd10
+        ON p.encounter_ref = icd10.encounter_ref
 )
 
 SELECT * FROM join_2020

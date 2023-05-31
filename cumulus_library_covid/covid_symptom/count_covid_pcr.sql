@@ -57,7 +57,7 @@ WITH powerset AS (
         cp.age_at_visit,
         cp.gender,
         cp.race_display
-    FROM covid__pcr AS cp
+    FROM covid_symptom__pcr AS cp
     GROUP BY
         cube(
             cp.covid_pcr_result,
