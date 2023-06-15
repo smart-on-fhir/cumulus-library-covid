@@ -2,15 +2,21 @@ study_prefix = "covid_symptom"
 
 [sql_config]
 file_names = [
-    "define_dx_icd10.sql",
-    "site_define.sql",
-    "covid_define_symptom.sql",
-    "covid_define.sql",
-    "count_covid_study_period.sql",
-    "count_covid_dx.sql",
-    "count_covid_pcr.sql",
-    "count_covid_symptom.sql",
-    "count_covid_prevalence_ed.sql",
+    "define_age_pediatric.sql",
+#     "define_age_general.sql", # Hospitals that are pediatric should use this instead !
+#    "define_study_period.sql",
+    "define_pcr.sql",
+    "define_pcr_positive.sql",
+    "define_pcr_negative.sql",
+#    "define_dx_icd10.sql",
+#    "site_define.sql",
+#    "covid_define_symptom.sql",
+#    "covid_define.sql",
+#    "count_covid_study_period.sql",
+#    "count_covid_dx.sql",
+#    "count_covid_pcr.sql",
+#    "count_covid_symptom.sql",
+#    "count_covid_prevalence_ed.sql",
 ]
 
 

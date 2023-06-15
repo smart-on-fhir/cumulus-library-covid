@@ -42,6 +42,9 @@ WHERE
         '10828004', 'Positive', 'POSITIVE'
     ));
 
+-- # TODO i2b2 specific lab result codes are hardcoded, should be covid_symptom__define_pcr
+-- https://github.com/smart-on-fhir/cumulus-etl/issues/231
+
 -- ############################################################################
 
 
