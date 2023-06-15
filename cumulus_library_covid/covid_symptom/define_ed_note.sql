@@ -1,5 +1,6 @@
--- Emergency Department Notes
---
+-- TODO ED Note definition lives in core, not covid symptom (core__ed_note)
+--  https://github.com/smart-on-fhir/cumulus-library-covid/issues/10
+
 CREATE OR REPLACE VIEW covid_symptom__site_ed_note AS
 SELECT
     t.from_system,
