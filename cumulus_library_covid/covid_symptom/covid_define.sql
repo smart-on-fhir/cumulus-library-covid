@@ -87,21 +87,6 @@ FROM (
 )
 AS t (cui, pref);
 
--- Influenza symptoms are a subset of the COVID symptoms, and important as a comparison.
-CREATE OR REPLACE VIEW covid_symptom__define_flu AS
-SELECT DISTINCT
-    c.code,
-    c.code_display
-FROM vocab__icd_legend AS c
-WHERE
-    (
-        c.code LIKE '487%'
-        OR c.code LIKE '488%'
-        OR c.code LIKE 'J12.9%'
-        OR c.code LIKE 'J11%'
-        OR c.code LIKE 'J10%'
-        OR c.code LIKE 'J09%'
-    );
 
 -- ############################################################################
 -- COVID19 Age Groups (primarily for Suicidality study)
