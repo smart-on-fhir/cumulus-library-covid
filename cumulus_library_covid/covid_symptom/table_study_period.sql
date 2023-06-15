@@ -56,31 +56,3 @@ period_2020 AS (
 )
 
 SELECT * FROM period_2020;
-
-CREATE TABLE covid_symptom__count_study_period AS
-WITH powerset AS (
-    SELECT
-        variant_era,
-        start_month,
-        ed_note,
-        gender,
-        age_group,
-        race_display,
-        count(DISTINCT subject_ref) AS cnt_subject,
-        count(DISTINCT encounter_ref) AS cnt_encounter
-    FROM covid_symptom__study_period
-    WHERE start_month BETWEEN date('2020-03-01') AND date('2022-06-01')
-    GROUP BY cube(variant_era, start_month, ed_note, gender, age_group, race_display)
-)
-
-SELECT
-    variant_era,
-    start_month,
-    ed_note,
-    gender,
-    age_group,
-    race_display,
-    cnt_encounter AS cnt
-FROM powerset
-WHERE cnt_subject >= 10
-ORDER BY start_month ASC, cnt_encounter DESC;

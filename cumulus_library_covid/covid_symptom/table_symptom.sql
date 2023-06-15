@@ -16,10 +16,6 @@
 --        tui:string>>>
 
 -- ############################################################################
--- Table COVID19 Symptoms
---
--- @covid_define_symptom_cui
---
 
 CREATE TABLE covid_symptom__symptom AS
 WITH mention AS (
@@ -99,54 +95,3 @@ FROM temp_period,
 WHERE
     temp_period.encounter_ref = v.encounter_ref
     AND v.cond_code.coding[1].code = icd10_list.icd10_code; --noqa: RF02,LT01
-
-
-
-
-
-
-
-
--- ############################################################################
---  COVID19 Symptoms by Variant Era
---
-CREATE OR REPLACE VIEW covid_symptom__count_symptom_week AS
-WITH powerset AS (
-    SELECT
-        COUNT(DISTINCT subject_ref) AS cnt_subject,
-        COUNT(DISTINCT encounter_ref) AS cnt_encounter,
-        symptom_display,
-        variant_era,
-        author_week,
-        age_group,
-        gender,
-        race_display,
-        enc_class_code,
-        ed_note
-    FROM covid_symptom__symptom
-    GROUP BY
-        CUBE(
-            symptom_display,
-            variant_era,
-            author_week,
-            age_group,
-            gender,
-            race_display,
-            enc_class_code,
-            ed_note
-        )
-)
-
-SELECT
-    cnt_encounter AS cnt,
-    symptom_display,
-    variant_era,
-    author_week,
-    age_group,
-    gender,
-    race_display,
-    enc_class_code,
-    ed_note
-FROM powerset
-WHERE cnt_subject >= 10
-ORDER BY author_week ASC, cnt_encounter DESC;
