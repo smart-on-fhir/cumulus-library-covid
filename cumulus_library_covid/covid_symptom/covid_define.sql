@@ -12,21 +12,6 @@
 -- http://build.fhir.org/ig/HL7/fhir-COVID19Library-ig/ValueSet-covid19-pos-neg-inv-vs.html
 
 -- ############################################################################
--- COVID19 Diagnosis
-
-CREATE OR REPLACE VIEW covid_symptom__define_dx AS
-SELECT
-    t.code_system,
-    t.code,
-    t.display
-FROM
-    (
-        VALUES
-        ('http://hl7.org/fhir/sid/icd-10-cm', 'U07.1', 'COVID-19')
-    ) AS t (code_system, code, display);
-
-
--- ############################################################################
 -- COVID19 PCR
 
 CREATE OR REPLACE VIEW covid_symptom__define_pcr AS

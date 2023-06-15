@@ -2,6 +2,7 @@ study_prefix = "covid_symptom"
 
 [sql_config]
 file_names = [
+    "define_dx_icd10.sql",
     "site_define.sql",
     "covid_define_symptom.sql",
     "covid_define.sql",
