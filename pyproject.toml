@@ -5,7 +5,7 @@ version = "0.1.2"
 # targeted for deprecation in that version.
 requires-python = ">= 3.9, <3.12"
 dependencies = [
-    "cumulus-library >= 0.1.2",
+    "cumulus-library >= 0.3.0",
     "sqlfluff == 2.0.2"
 ]
 description = "SQL generation for cumulus covid symptom analysis"
