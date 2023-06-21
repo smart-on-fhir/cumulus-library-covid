@@ -2,6 +2,12 @@
 -- Table COVID19 Diagnosis
 
 CREATE TABLE covid_symptom__dx AS
+WITH define_dx AS
+(
+    select code,system,display from covid_symptom__define_dx_icd10
+    UNION
+    select code,system,display from covid_symptom__define_dx_snomed
+)
 SELECT DISTINCT
     c.subject_ref,
     c.encounter_ref,
@@ -13,7 +19,7 @@ SELECT DISTINCT
     s.variant_era
 FROM core__condition AS c,
     covid_symptom__study_period AS s,
-    covid_symptom__define_dx AS dx
+    define_dx
 WHERE
-    c.cond_code.coding[1].code = dx.code -- noqa: LT01,RF02
+    c.cond_code.coding[1].code = define_dx.code -- noqa: LT01,RF02
     AND c.encounter_ref = s.encounter_ref;
