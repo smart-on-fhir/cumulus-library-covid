@@ -37,24 +37,3 @@ SELECT
     max(end_date) AS max_date
 FROM covid_symptom__study_period;
 
--- NOTICE! this is the study period BEFORE covid for retrospective comparison to FLU.
-CREATE TABLE covid_symptom__study_period_2016 AS
-WITH period_2016 AS (
-    SELECT * FROM core__study_period WHERE ed_note -- noqa: AM04
-),
-
-period_2020 AS (
-    SELECT DISTINCT
-        period_2016.*,
-        -- TODO https://github.com/smart-on-fhir/cumulus-library-covid/issues/11
-        coalesce(cssp.variant_era, 'before-covid') AS variant_era,
-        -- TODO https://github.com/smart-on-fhir/cumulus-library-covid/issues/9
-        coalesce(csda.age_group, '>21') AS age_group
-    FROM period_2016
-    LEFT JOIN covid_symptom__define_age AS csda ON period_2016.age_at_visit = csda.age
-    LEFT JOIN
-        covid_symptom__study_period AS cssp
-        ON period_2016.encounter_ref = cssp.encounter_ref
-)
-
-SELECT * FROM period_2020;
