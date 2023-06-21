@@ -1,14 +1,17 @@
 -- ############################################################################
 -- Table COVID19 PCR tests for COVID performed at the local hospital
--- **Likely does not include PCR tests from other healthcare settings**
---
--- Study Period: @core_study_period_covid
--- PCR Test Codes: @covid_define_pcr, @map_lab_code
 
 CREATE TABLE covid_symptom__pcr AS
+WITH obs_interpret AS
+(
+    select system,code, 'Negative' as display from covid_symptom__define_pcr_negative
+    UNION
+    select system,code, 'Positive' as display from covid_symptom__define_pcr_positive
+    UNION
+    select from_system, from_code as code, display from covid_symptom__define_pcr_custom
+)
 SELECT DISTINCT
-    upper(o.lab_result.display) AS covid_pcr_result_display,
-    o.lab_result AS covid_pcr_result,
+    obs_interpret.display AS covid_pcr_result_display,
     o.lab_code AS covid_pcr_code,
     o.lab_date AS covid_pcr_date,
     o.lab_week AS covid_pcr_week,
@@ -28,19 +31,16 @@ SELECT DISTINCT
     o.encounter_ref,
     o.observation_ref
 FROM core__observation_lab AS o,
-    covid_symptom__define_pcr AS pcr,
     covid_symptom__define_period AS p,
-    covid_symptom__site_pcr,
-    covid_symptom__study_period AS s
+    covid_symptom__study_period AS s,
+    covid_symptom__define_pcr AS pcr,
+    obs_interpret
 WHERE
     (s.encounter_ref = o.encounter_ref)
     AND (s.variant_era = p.variant_era)
     AND (o.lab_week BETWEEN p.variant_start AND p.variant_end)
     AND (o.lab_code.code = pcr.code)
-    AND (o.lab_result.code IN (
-        '260385009', 'Negative', 'NEGATIVE',
-        '10828004', 'Positive', 'POSITIVE'
-    ));
+    AND (o.lab_result.code = obs_interpret.code);
 
--- # TODO i2b2 specific lab result codes are hardcoded, should be covid_symptom__define_pcr
--- https://github.com/smart-on-fhir/cumulus-etl/issues/231
+-- TODO Cerner specific handling of lab RESULT
+-- https://github.com/smart-on-fhir/cumulus-library-covid/issues/13
