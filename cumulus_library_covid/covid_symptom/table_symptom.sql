@@ -17,7 +17,7 @@
 
 -- ############################################################################
 
-CREATE TABLE covid_symptom__symptom AS
+CREATE TABLE covid_symptom__symptom_nlp AS
 WITH mention AS (
     SELECT
         t.concept,
@@ -78,11 +78,6 @@ icd10_list AS (
         code AS icd10_code,
         CONCAT('ICD10:', pref) AS icd10_display
     FROM covid_symptom__define_symptom WHERE code_system = 'ICD10CM'
-    UNION
-    SELECT DISTINCT
-        code AS icd10_code,
-        'ICD10:Influenza' AS icd10_display
-    FROM covid_symptom__define_flu
 )
 
 SELECT DISTINCT
