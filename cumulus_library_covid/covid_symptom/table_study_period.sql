@@ -19,7 +19,7 @@ SELECT DISTINCT
     s.enc_class_code,
     s.doc_type_code,
     s.doc_type_display,
-    s.ed_note,
+    s.ed_note, -- TODO https://github.com/smart-on-fhir/cumulus-library-covid/issues/10
     a.age_group
 FROM core__study_period AS s,
     covid_symptom__define_period AS v,
@@ -46,7 +46,9 @@ WITH period_2016 AS (
 period_2020 AS (
     SELECT DISTINCT
         period_2016.*,
+        -- TODO https://github.com/smart-on-fhir/cumulus-library-covid/issues/11
         coalesce(cssp.variant_era, 'before-covid') AS variant_era,
+        -- TODO https://github.com/smart-on-fhir/cumulus-library-covid/issues/9
         coalesce(csda.age_group, '>21') AS age_group
     FROM period_2016
     LEFT JOIN covid_symptom__define_age AS csda ON period_2016.age_at_visit = csda.age
