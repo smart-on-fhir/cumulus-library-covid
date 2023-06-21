@@ -8,7 +8,9 @@ file_names = [
     "define_pcr.sql",
     "define_pcr_positive.sql",
     "define_pcr_negative.sql",
+    "define_pcr_custom.sql",
     "define_dx_icd10.sql",
+    "define_dx_snomed.sql",
     "define_ed_note.sql",
     "define_symptom.sql",
 
