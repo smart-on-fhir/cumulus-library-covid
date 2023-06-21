@@ -2,9 +2,9 @@ study_prefix = "covid_symptom"
 
 [sql_config]
 file_names = [
-    "define_age_pediatric.sql",
+#    "define_age_pediatric.sql",
      "define_age_general.sql", # CDC pilot sites other than BCH should use general age group instead.
-#    "define_study_period.sql", # BCH Symptom study period ended June 1, 2022. For CDC Pilot Sites, OK to extend.
+    "define_study_period.sql", # BCH Symptom study period ended June 1, 2022. For CDC Pilot Sites, OK to extend.
     "define_pcr.sql",
     "define_pcr_positive.sql",
     "define_pcr_negative.sql",
