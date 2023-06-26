@@ -13,6 +13,8 @@ SELECT DISTINCT
     c.encounter_ref,
     c.cond_code.coding[1].code AS cond_code, -- noqa: LT01,RF02
     c.recorded_week AS cond_week,
+    c.recorded_month as cond_month,
+    c.recorded_year as cond_year,
     s.enc_class_code,
     s.age_at_visit,
     s.ed_note,
