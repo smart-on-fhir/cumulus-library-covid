@@ -6,7 +6,7 @@ SELECT
     t.from_system,
     t.from_code,
     t.from_display,
-    t.code_system,
+    t.system,
     t.code,
     t.display
 FROM
