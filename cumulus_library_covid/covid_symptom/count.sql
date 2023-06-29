@@ -111,22 +111,3 @@ CREATE or replace VIEW covid_symptom__count_study_period_month AS
     from powerset 
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
-
--- ###########################################################
-CREATE or replace VIEW covid_symptom__count_study_period_year AS 
-    with powerset as
-    (
-        select
-        count(distinct subject_ref)   as cnt_subject
-        , count(distinct encounter_ref)   as cnt_encounter
-        , start_year, variant_era, ed_note, gender, age_group, race_display        
-        FROM covid_symptom__study_period
-        group by CUBE
-        ( start_year, variant_era, ed_note, gender, age_group, race_display )
-    )
-    select
-          cnt_encounter  as cnt 
-        , start_year, variant_era, ed_note, gender, age_group, race_display
-    from powerset 
-    WHERE cnt_subject >= 10 
-    ORDER BY cnt desc;

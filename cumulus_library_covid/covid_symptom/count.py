@@ -85,7 +85,7 @@ def concat_view_sql(create_view_list: List[str]) -> str:
     """
     :param create_view_list: SQL prepared statements
     """
-    seperator = '-- ########################################################### --'
+    seperator = '-- ###########################################################'
     concat = list()
 
     for create_view in create_view_list:
