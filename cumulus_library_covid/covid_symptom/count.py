@@ -46,7 +46,7 @@ def count_study_period(duration='month'):
     view_name = table('count_study_period', duration)
     from_table = table('study_period')
     cols = [f'start_{duration}',
-            'variant_era', 'start_month', 'ed_note',
+            'variant_era', 'ed_note',
             'gender', 'age_group', 'race_display']
     return counts.count_encounter(view_name, from_table, cols)
 
@@ -54,13 +54,13 @@ def count_prevalence_ed(duration='month'):
     view_name = table('count_prevalence_ed', duration)
     from_table = table('prevalence_ed')
     cols = [
+        f'author_{duration}',
         'covid_dx',
         'covid_icd10',
         'covid_pcr_result',
         'covid_symptom',
         'symptom_icd10_display',
         'variant_era',
-        'author_month',
         'age_group']
     return counts.count_encounter(view_name, from_table, cols)
 
@@ -71,9 +71,9 @@ def count_symptom(duration='week'):
     """
     view_name = table('count_symptom', duration)
     from_table = table('symptom')
-    cols = ['symptom_display',
+    cols = [f'author_{duration}',
+            'symptom_display',
             'variant_era',
-            'author_week',
             'age_group',
             'gender',
             'race_display',
@@ -84,13 +84,12 @@ def count_symptom(duration='week'):
 def concat_view_sql(create_view_list: List[str]) -> str:
     """
     :param create_view_list: SQL prepared statements
-    :param filename: path to output file, default 'count.sql' in PWD
     """
-    seperator = '-- ###########################################################'
+    seperator = '-- ########################################################### --'
     concat = list()
 
     for create_view in create_view_list:
-        concat.append(seperator + create_view + '\n')
+        concat.append(seperator + '\n' + create_view + '\n')
 
     return '\n'.join(concat)
 
@@ -110,6 +109,4 @@ if __name__ == '__main__':
         count_dx('month'),
         count_pcr('week'),
         count_pcr('month'),
-        count_study_period('week'),
-        count_study_period('month'),
-        count_study_period('year')])
+        count_study_period('week'), count_study_period('month')])

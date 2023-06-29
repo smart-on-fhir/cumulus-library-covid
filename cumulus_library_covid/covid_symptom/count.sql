@@ -1,4 +1,4 @@
--- ####################################
+-- ###########################################################
 CREATE or replace VIEW covid_symptom__count_dx_week AS 
     with powerset as
     (
@@ -17,8 +17,7 @@ CREATE or replace VIEW covid_symptom__count_dx_week AS
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
 
-
--- ####################################
+-- ###########################################################
 CREATE or replace VIEW covid_symptom__count_dx_month AS 
     with powerset as
     (
@@ -37,8 +36,7 @@ CREATE or replace VIEW covid_symptom__count_dx_month AS
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
 
-
--- ####################################
+-- ###########################################################
 CREATE or replace VIEW covid_symptom__count_pcr_week AS 
     with powerset as
     (
@@ -57,8 +55,7 @@ CREATE or replace VIEW covid_symptom__count_pcr_week AS
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
 
-
--- ####################################
+-- ###########################################################
 CREATE or replace VIEW covid_symptom__count_pcr_month AS 
     with powerset as
     (
@@ -77,63 +74,59 @@ CREATE or replace VIEW covid_symptom__count_pcr_month AS
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
 
-
--- ####################################
+-- ###########################################################
 CREATE or replace VIEW covid_symptom__count_study_period_week AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         , count(distinct encounter_ref)   as cnt_encounter
-        , start_week, variant_era, start_month, ed_note, gender, age_group, race_display        
+        , start_week, variant_era, ed_note, gender, age_group, race_display        
         FROM covid_symptom__study_period
         group by CUBE
-        ( start_week, variant_era, start_month, ed_note, gender, age_group, race_display )
+        ( start_week, variant_era, ed_note, gender, age_group, race_display )
     )
     select
           cnt_encounter  as cnt 
-        , start_week, variant_era, start_month, ed_note, gender, age_group, race_display
+        , start_week, variant_era, ed_note, gender, age_group, race_display
     from powerset 
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
 
-
--- ####################################
+-- ###########################################################
 CREATE or replace VIEW covid_symptom__count_study_period_month AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         , count(distinct encounter_ref)   as cnt_encounter
-        , start_month, variant_era, start_month, ed_note, gender, age_group, race_display        
+        , start_month, variant_era, ed_note, gender, age_group, race_display        
         FROM covid_symptom__study_period
         group by CUBE
-        ( start_month, variant_era, start_month, ed_note, gender, age_group, race_display )
+        ( start_month, variant_era, ed_note, gender, age_group, race_display )
     )
     select
           cnt_encounter  as cnt 
-        , start_month, variant_era, start_month, ed_note, gender, age_group, race_display
+        , start_month, variant_era, ed_note, gender, age_group, race_display
     from powerset 
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
 
-
--- ####################################
+-- ###########################################################
 CREATE or replace VIEW covid_symptom__count_study_period_year AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         , count(distinct encounter_ref)   as cnt_encounter
-        , start_year, variant_era, start_month, ed_note, gender, age_group, race_display        
+        , start_year, variant_era, ed_note, gender, age_group, race_display        
         FROM covid_symptom__study_period
         group by CUBE
-        ( start_year, variant_era, start_month, ed_note, gender, age_group, race_display )
+        ( start_year, variant_era, ed_note, gender, age_group, race_display )
     )
     select
           cnt_encounter  as cnt 
-        , start_year, variant_era, start_month, ed_note, gender, age_group, race_display
+        , start_year, variant_era, ed_note, gender, age_group, race_display
     from powerset 
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
-
