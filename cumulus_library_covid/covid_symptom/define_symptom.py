@@ -18,7 +18,7 @@ def main():
         f"select * from (VALUES \n {values_sql}) \n {table_cols}"
     )
 
-    with open("covid_define_symptom.sql", "w", encoding="UTF-8") as f:
+    with open("define_symptom.sql", "w", encoding="UTF-8") as f:
         f.write(create_view)
 
 

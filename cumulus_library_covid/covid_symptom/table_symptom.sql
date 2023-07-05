@@ -16,12 +16,8 @@
 --        tui:string>>>
 
 -- ############################################################################
--- Table COVID19 Symptoms
---
--- @covid_define_symptom_cui
---
 
-CREATE TABLE covid_symptom__symptom AS
+CREATE TABLE covid_symptom__symptom_nlp AS
 WITH mention AS (
     SELECT
         t.concept,
@@ -32,6 +28,9 @@ WITH mention AS (
         nr.docref_id
     FROM covid_symptom__nlp_results AS nr,
         UNNEST(match.conceptattributes) AS t (concept)
+),
+covid_symptom__define_symptom_cui as (
+    select distinct cui, pref from covid_symptom__define_symptom
 )
 
 SELECT DISTINCT
@@ -79,11 +78,6 @@ icd10_list AS (
         code AS icd10_code,
         CONCAT('ICD10:', pref) AS icd10_display
     FROM covid_symptom__define_symptom WHERE code_system = 'ICD10CM'
-    UNION
-    SELECT DISTINCT
-        code AS icd10_code,
-        'ICD10:Influenza' AS icd10_display
-    FROM covid_symptom__define_flu
 )
 
 SELECT DISTINCT
@@ -96,54 +90,3 @@ FROM temp_period,
 WHERE
     temp_period.encounter_ref = v.encounter_ref
     AND v.cond_code.coding[1].code = icd10_list.icd10_code; --noqa: RF02,LT01
-
-
-
-
-
-
-
-
--- ############################################################################
---  COVID19 Symptoms by Variant Era
---
-CREATE OR REPLACE VIEW covid_symptom__count_symptom_week AS
-WITH powerset AS (
-    SELECT
-        COUNT(DISTINCT subject_ref) AS cnt_subject,
-        COUNT(DISTINCT encounter_ref) AS cnt_encounter,
-        symptom_display,
-        variant_era,
-        author_week,
-        age_group,
-        gender,
-        race_display,
-        enc_class_code,
-        ed_note
-    FROM covid_symptom__symptom
-    GROUP BY
-        CUBE(
-            symptom_display,
-            variant_era,
-            author_week,
-            age_group,
-            gender,
-            race_display,
-            enc_class_code,
-            ed_note
-        )
-)
-
-SELECT
-    cnt_encounter AS cnt,
-    symptom_display,
-    variant_era,
-    author_week,
-    age_group,
-    gender,
-    race_display,
-    enc_class_code,
-    ed_note
-FROM powerset
-WHERE cnt_subject >= 10
-ORDER BY author_week ASC, cnt_encounter DESC;
