@@ -27,4 +27,4 @@ FROM
         (19, '=>5'),
         (20, '=>5'),
         (21, '=>5')
-    ) AS t (age, age_group);
+    ) AS t (age, age_group); --noqa: AL05

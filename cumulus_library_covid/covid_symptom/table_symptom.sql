@@ -29,8 +29,12 @@ WITH mention AS (
     FROM covid_symptom__nlp_results AS nr,
         UNNEST(match.conceptattributes) AS t (concept)
 ),
-covid_symptom__define_symptom_cui as (
-    select distinct cui, pref from covid_symptom__define_symptom
+
+covid_symptom__define_symptom_cui AS (
+    SELECT DISTINCT
+        cui,
+        pref
+    FROM covid_symptom__define_symptom
 )
 
 SELECT DISTINCT
