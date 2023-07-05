@@ -17,7 +17,7 @@ The following publications leveraged this module:
 
 __A computable phenotype for patients with SARS-CoV2 testing that occurred outside the hospital__
 Lijing Wang, Amy Zipursky, Alon Geva, Andrew J. McMurry, Kenneth D. Mandl, Timothy A. Miller
-medRxiv 2023.01.19.23284738; doi: https://doi.org/10.1101/2023.01.19.23284738 (Preprint)
+JAMIA Open, 2023;, ooad047,doi: https://doi.org/10.1093/jamiaopen/ooad047 
 
 __The SMART Text2FHIR Pipeline__
 Timothy A. Miller, Andrew J. McMurry, James Jones, Daniel Gottlieb, Kenneth D. Mandl
