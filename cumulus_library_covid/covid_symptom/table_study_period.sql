@@ -36,4 +36,3 @@ SELECT
     min(start_date) AS min_date,
     max(end_date) AS max_date
 FROM covid_symptom__study_period;
-

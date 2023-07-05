@@ -2,14 +2,26 @@
 -- Table COVID19 PCR tests for COVID performed at the local hospital
 
 CREATE TABLE covid_symptom__pcr AS
-WITH obs_interpret AS
-(
-    select system,code, 'Negative' as display from covid_symptom__define_pcr_negative
+WITH obs_interpret AS (
+    SELECT
+        system,
+        code,
+        'Negative' AS display
+    FROM covid_symptom__define_pcr_negative
     UNION
-    select system,code, 'Positive' as display from covid_symptom__define_pcr_positive
+    SELECT
+        system,
+        code,
+        'Positive' AS display
+    FROM covid_symptom__define_pcr_positive
     UNION
-    select from_system, from_code as code, display from covid_symptom__define_pcr_custom
+    SELECT
+        from_system,
+        from_code AS code,
+        display
+    FROM covid_symptom__define_pcr_custom
 )
+
 SELECT DISTINCT
     obs_interpret.display AS covid_pcr_result_display,
     o.lab_code AS covid_pcr_code,

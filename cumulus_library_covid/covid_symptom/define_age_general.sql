@@ -126,4 +126,4 @@ FROM
         (108, '>=90'),
         (109, '>=90'),
         (110, '>=90')
-    ) AS t (age, age_group);
+    ) AS t (age, age_group); --noqa: AL05
