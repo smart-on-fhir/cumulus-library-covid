@@ -120,8 +120,8 @@ def write_view_sql(view_list_sql: List[str], filename="count.sql") -> None:
     """
     sql_optimizer = concat_view_sql(view_list_sql)
     sql_optimizer = sql_optimizer.replace("ORDER BY cnt desc", "")
-    sql_optimizer = sql_optimizer.replace("CREATE or replace VIEW", 'CREATE TABLE')
-    with open(filename, 'w') as fout:
+    sql_optimizer = sql_optimizer.replace("CREATE or replace VIEW", "CREATE TABLE")
+    with open(filename, "w") as fout:
         fout.write(sql_optimizer)
 
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
             count_pcr("week"),
             count_study_period("month"),
             count_study_period("week"),
-            count_prevalence_ed('month'),
-            count_prevalence_ed('week'),
+            count_prevalence_ed("month"),
+            count_prevalence_ed("week"),
         ]
     )
