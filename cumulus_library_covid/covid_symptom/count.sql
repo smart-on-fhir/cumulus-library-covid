@@ -179,6 +179,88 @@ FROM powerset
 WHERE cnt_subject >= 10;
 
 -- ###########################################################
+CREATE TABLE covid_symptom__count_symptom_week AS
+WITH powerset AS (
+    SELECT
+        count(DISTINCT subject_ref) AS cnt_subject,
+        count(DISTINCT encounter_ref) AS cnt_encounter,
+        author_week,
+        symptom_display,
+        variant_era,
+        age_group,
+        gender,
+        race_display,
+        enc_class_code,
+        ed_note
+    FROM covid_symptom__symptom_nlp
+    GROUP BY
+        cube(
+            author_week,
+            symptom_display,
+            variant_era,
+            age_group,
+            gender,
+            race_display,
+            enc_class_code,
+            ed_note
+        )
+)
+
+SELECT
+    cnt_encounter AS cnt,
+    author_week,
+    symptom_display,
+    variant_era,
+    age_group,
+    gender,
+    race_display,
+    enc_class_code,
+    ed_note
+FROM powerset
+WHERE cnt_subject >= 10;
+
+-- ###########################################################
+CREATE TABLE covid_symptom__count_symptom_month AS
+WITH powerset AS (
+    SELECT
+        count(DISTINCT subject_ref) AS cnt_subject,
+        count(DISTINCT encounter_ref) AS cnt_encounter,
+        author_month,
+        symptom_display,
+        variant_era,
+        age_group,
+        gender,
+        race_display,
+        enc_class_code,
+        ed_note
+    FROM covid_symptom__symptom_nlp
+    GROUP BY
+        cube(
+            author_month,
+            symptom_display,
+            variant_era,
+            age_group,
+            gender,
+            race_display,
+            enc_class_code,
+            ed_note
+        )
+)
+
+SELECT
+    cnt_encounter AS cnt,
+    author_month,
+    symptom_display,
+    variant_era,
+    age_group,
+    gender,
+    race_display,
+    enc_class_code,
+    ed_note
+FROM powerset
+WHERE cnt_subject >= 10;
+
+-- ###########################################################
 CREATE TABLE covid_symptom__count_prevalence_ed_month AS
 WITH powerset AS (
     SELECT
