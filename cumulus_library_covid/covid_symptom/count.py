@@ -76,6 +76,7 @@ def count_prevalence_ed(duration="month"):
         "symptom_icd10_display",
         "variant_era",
         "age_group",
+        "enc_class_code",
     ]
     return counts.count_encounter(view_name, from_table, cols)
 
