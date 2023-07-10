@@ -86,7 +86,7 @@ def count_symptom(duration="week"):
     covid_symptom__count_symptom_month
     """
     view_name = table("count_symptom", duration)
-    from_table = table("symptom")
+    from_table = table("symptom_nlp")
     cols = [
         f"author_{duration}",
         "symptom_display",
@@ -134,6 +134,8 @@ if __name__ == "__main__":
             count_pcr("week"),
             count_study_period("month"),
             count_study_period("week"),
+            count_symptom("week"),
+            count_symptom("month"),
             count_prevalence_ed("month"),
             count_prevalence_ed("week"),
         ]
