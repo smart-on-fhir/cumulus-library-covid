@@ -118,18 +118,23 @@ def write_view_sql(view_list_sql: List[str], filename="count.sql") -> None:
     :param view_list_sql: SQL prepared statements
     :param filename: path to output file, default 'count.sql' in PWD
     """
-    with open(filename, "w") as fout:
-        fout.write(concat_view_sql(view_list_sql))
+    sql_optimizer = concat_view_sql(view_list_sql)
+    sql_optimizer = sql_optimizer.replace("ORDER BY cnt desc", "")
+    sql_optimizer = sql_optimizer.replace("CREATE or replace VIEW", 'CREATE TABLE')
+    with open(filename, 'w') as fout:
+        fout.write(sql_optimizer)
 
 
 if __name__ == "__main__":
     write_view_sql(
         [
-            count_dx("week"),
             count_dx("month"),
-            count_pcr("week"),
+            count_dx("week"),
             count_pcr("month"),
-            count_study_period("week"),
+            count_pcr("week"),
             count_study_period("month"),
+            count_study_period("week"),
+            count_prevalence_ed('month'),
+            count_prevalence_ed('week'),
         ]
     )
