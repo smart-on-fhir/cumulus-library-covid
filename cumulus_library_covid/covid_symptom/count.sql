@@ -273,7 +273,8 @@ WITH powerset AS (
         covid_symptom,
         symptom_icd10_display,
         variant_era,
-        age_group
+        age_group,
+        enc_class_code
     FROM covid_symptom__prevalence_ed
     GROUP BY
         cube(
@@ -284,7 +285,8 @@ WITH powerset AS (
             covid_symptom,
             symptom_icd10_display,
             variant_era,
-            age_group
+            age_group,
+            enc_class_code
         )
 )
 
@@ -314,7 +316,8 @@ WITH powerset AS (
         covid_symptom,
         symptom_icd10_display,
         variant_era,
-        age_group
+        age_group,
+        enc_class_code
     FROM covid_symptom__prevalence_ed
     GROUP BY
         cube(
@@ -325,7 +328,8 @@ WITH powerset AS (
             covid_symptom,
             symptom_icd10_display,
             variant_era,
-            age_group
+            age_group,
+            enc_class_code
         )
 )
 

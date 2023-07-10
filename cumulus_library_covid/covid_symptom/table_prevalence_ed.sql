@@ -9,21 +9,24 @@ WITH from_period AS (
         race_display,
         age_at_visit,
         age_group,
-        variant_era
+        variant_era,
+        enc_class_code
     FROM covid_symptom__study_period
     WHERE ed_note
 ),
 
 join_2020 AS (
     SELECT DISTINCT
-        p.encounter_ref,
-        p.subject_ref,
         p.author_week,
         p.author_month,
         p.gender,
         p.race_display,
+        p.age_at_visit,
         p.age_group,
         p.variant_era,
+        p.enc_class_code,
+        p.subject_ref,
+        p.encounter_ref,
         COALESCE(pcr.covid_pcr_result_display, 'No PCR') AS covid_pcr_result,
         CASE
             WHEN dx.cond_code IS NOT NULL THEN 'COVID ICD10' ELSE 'No COVID ICD10'
