@@ -1,5 +1,5 @@
 -- ###########################################################
-CREATE OR REPLACE VIEW covid_symptom__count_dx_week AS
+CREATE TABLE covid_symptom__count_dx_week AS
 WITH powerset AS (
     SELECT
         count(DISTINCT subject_ref) AS cnt_subject,
@@ -25,7 +25,7 @@ WHERE cnt_subject >= 10
 ORDER BY cnt DESC;
 
 -- ###########################################################
-CREATE OR REPLACE VIEW covid_symptom__count_dx_month AS
+CREATE TABLE covid_symptom__count_dx_month AS
 WITH powerset AS (
     SELECT
         count(DISTINCT subject_ref) AS cnt_subject,
@@ -51,7 +51,7 @@ WHERE cnt_subject >= 10
 ORDER BY cnt DESC;
 
 -- ###########################################################
-CREATE OR REPLACE VIEW covid_symptom__count_pcr_week AS
+CREATE TABLE covid_symptom__count_pcr_week AS
 WITH powerset AS (
     SELECT
         count(DISTINCT subject_ref) AS cnt_subject,
@@ -90,7 +90,7 @@ WHERE cnt_subject >= 10
 ORDER BY cnt DESC;
 
 -- ###########################################################
-CREATE OR REPLACE VIEW covid_symptom__count_pcr_month AS
+CREATE TABLE covid_symptom__count_pcr_month AS
 WITH powerset AS (
     SELECT
         count(DISTINCT subject_ref) AS cnt_subject,
@@ -129,7 +129,7 @@ WHERE cnt_subject >= 10
 ORDER BY cnt DESC;
 
 -- ###########################################################
-CREATE OR REPLACE VIEW covid_symptom__count_study_period_week AS
+CREATE TABLE covid_symptom__count_study_period_week AS
 WITH powerset AS (
     SELECT
         count(DISTINCT subject_ref) AS cnt_subject,
@@ -157,7 +157,7 @@ WHERE cnt_subject >= 10
 ORDER BY cnt DESC;
 
 -- ###########################################################
-CREATE OR REPLACE VIEW covid_symptom__count_study_period_month AS
+CREATE TABLE covid_symptom__count_study_period_month AS
 WITH powerset AS (
     SELECT
         count(DISTINCT subject_ref) AS cnt_subject,
