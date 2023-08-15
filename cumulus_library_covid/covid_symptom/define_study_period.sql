@@ -13,7 +13,6 @@ SELECT
     t.variant_end
 FROM (
     VALUES
-    ('before-covid', date('2016-06-01'), date('2020-02-29')),
     ('before-delta', date('2020-03-01'), date('2021-06-20')),
     ('delta', date('2021-06-21'), date('2021-12-19')),
     ('omicron', date('2021-12-20'), date('2022-06-01'))
