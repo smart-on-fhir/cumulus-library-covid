@@ -19,7 +19,7 @@ WITH define_dx AS (
 SELECT DISTINCT
     c.subject_ref,
     c.encounter_ref,
-    c.cond_code.coding[1].code AS cond_code, -- noqa: LT01,RF02
+    c.code AS cond_code, -- noqa: LT01,RF02
     c.recorded_week AS cond_week,
     c.recorded_month AS cond_month,
     c.recorded_year AS cond_year,
@@ -31,5 +31,5 @@ FROM core__condition AS c,
     covid_symptom__study_period AS s,
     define_dx
 WHERE
-    c.cond_code.coding[1].code = define_dx.code -- noqa: LT01,RF02
+    c.code = define_dx.code -- noqa: LT01,RF02
     AND c.encounter_ref = s.encounter_ref;
