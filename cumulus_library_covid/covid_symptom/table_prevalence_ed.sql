@@ -29,11 +29,7 @@ join_2020 AS (
         p.encounter_ref,
         COALESCE(pcr.covid_pcr_result_display, 'None') AS covid_pcr_result,
         COALESCE(dx.cond_code, 'None') AS covid_icd10,
-        CASE
-            WHEN
-                (dx.cond_code IS NOT NULL OR pcr.covid_pcr_result_display = 'POSITIVE')
-                THEN True ELSE False
-        END AS covid_dx,
+        (dx.cond_code IS NOT NULL OR pcr.covid_pcr_result_display = 'POSITIVE') AS covid_dx,
         COALESCE(nlp.symptom_display, 'None') AS covid_symptom,
         COALESCE(icd10.icd10_display, 'None') AS symptom_icd10_display
     FROM from_period AS p
