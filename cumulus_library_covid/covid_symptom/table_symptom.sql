@@ -93,4 +93,4 @@ FROM temp_period,
     icd10_list
 WHERE
     temp_period.encounter_ref = v.encounter_ref
-    AND v.cond_code.coding[1].code = icd10_list.icd10_code; --noqa: RF02,LT01
+    AND v.code = icd10_list.icd10_code; --noqa: RF02,LT01
