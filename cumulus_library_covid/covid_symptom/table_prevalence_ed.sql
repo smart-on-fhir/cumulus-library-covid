@@ -27,18 +27,12 @@ join_2020 AS (
         p.enc_class_code,
         p.subject_ref,
         p.encounter_ref,
-        COALESCE(pcr.covid_pcr_result_display, 'No PCR') AS covid_pcr_result,
-        CASE
-            WHEN dx.cond_code IS NOT NULL THEN 'COVID ICD10' ELSE 'No COVID ICD10'
-        END AS covid_icd10,
-        CASE
-            WHEN
-                (dx.cond_code IS NOT NULL OR pcr.covid_pcr_result_display = 'POSITIVE')
-                THEN 'COVID DX'
-            ELSE 'No COVID DX'
-        END AS covid_dx,
-        COALESCE(nlp.symptom_display, 'No Symptom') AS covid_symptom,
-        COALESCE(icd10.icd10_display, 'No Symptom ICD10') AS symptom_icd10_display
+        COALESCE(pcr.covid_pcr_result_display, 'None') AS covid_pcr_result,
+        COALESCE(dx.cond_code, 'None') AS covid_icd10,
+        (dx.cond_code IS NOT NULL OR pcr.covid_pcr_result_display = 'POSITIVE')
+        AS covid_dx,
+        COALESCE(nlp.symptom_display, 'None') AS covid_symptom,
+        COALESCE(icd10.icd10_display, 'None') AS symptom_icd10_display
     FROM from_period AS p
     LEFT JOIN covid_symptom__dx AS dx ON p.encounter_ref = dx.encounter_ref
     LEFT JOIN covid_symptom__pcr AS pcr ON p.encounter_ref = pcr.encounter_ref

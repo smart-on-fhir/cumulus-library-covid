@@ -1,7 +1,7 @@
 [project]
 name = "cumulus-library-covid"
-version = "0.1.7"
 requires-python = ">= 3.9"
+version = "0.2.0"
 dependencies = [
     "cumulus-library >= 1.2.0",
     "sqlfluff == 2.0.2"
