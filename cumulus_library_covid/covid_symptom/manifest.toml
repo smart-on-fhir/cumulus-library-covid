@@ -20,7 +20,8 @@ file_names = [
     "table_symptom.sql",
     "table_prevalence_ed.sql",
 
-    "count.sql"
+    "count.sql",
+    "version.sql"
 ]
 
 
