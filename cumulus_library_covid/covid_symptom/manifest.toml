@@ -37,4 +37,5 @@ export_list = [
     "covid_symptom__count_symptom_week",
     "covid_symptom__count_symptom_month",
     "covid_symptom__meta_date",
+    "covid_symptom__meta_version",
 ]
