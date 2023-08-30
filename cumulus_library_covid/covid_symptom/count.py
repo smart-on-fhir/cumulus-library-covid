@@ -1,6 +1,7 @@
 from pathlib import Path
 from cumulus_library.schema.counts import CountsBuilder
 
+
 class CovidCountsBuilder(CountsBuilder):
     display_text = "Creating covid counts..."
 
@@ -20,7 +21,6 @@ class CovidCountsBuilder(CountsBuilder):
         ]
         return self.count_encounter(view_name, from_table, cols)
 
-
     def count_pcr(self, duration="week"):
         """
         covid_symptom__count_pcr_week
@@ -38,7 +38,6 @@ class CovidCountsBuilder(CountsBuilder):
             "race_display",
         ]
         return self.count_encounter(view_name, from_table, cols)
-
 
     def count_study_period(self, duration="month"):
         """
@@ -58,7 +57,6 @@ class CovidCountsBuilder(CountsBuilder):
         ]
         return self.count_encounter(view_name, from_table, cols)
 
-
     def count_prevalence_ed(self, duration="month"):
         view_name = self.get_table_name("count_prevalence_ed", duration)
         from_table = self.get_table_name("prevalence_ed")
@@ -74,7 +72,6 @@ class CovidCountsBuilder(CountsBuilder):
             "enc_class_code",
         ]
         return self.count_encounter(view_name, from_table, cols)
-
 
     def count_symptom(self, duration="week"):
         """
@@ -95,7 +92,6 @@ class CovidCountsBuilder(CountsBuilder):
         ]
         return self.count_encounter(view_name, from_table, cols)
 
-
     def prepare_queries(self, cursor=None, schema=None):
         self.queries = [
             self.count_dx("month"),
@@ -109,6 +105,7 @@ class CovidCountsBuilder(CountsBuilder):
             self.count_prevalence_ed("month"),
             self.count_prevalence_ed("week"),
         ]
+
 
 if __name__ == "__main__":
     builder = CovidCountsBuilder()
