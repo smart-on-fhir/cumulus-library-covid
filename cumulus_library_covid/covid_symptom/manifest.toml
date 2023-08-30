@@ -20,10 +20,13 @@ file_names = [
     "table_symptom.sql",
     "table_prevalence_ed.sql",
 
-    "count.sql",
     "version.sql"
 ]
 
+[counts_builder_config]
+file_names = [
+    "count.py"
+]
 
 [export_config]
 export_list = [
