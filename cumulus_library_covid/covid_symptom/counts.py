@@ -19,7 +19,9 @@ class CovidCountsBuilder(CountsBuilder):
             "ed_note",
             "variant_era",
         ]
-        return self.count_encounter(view_name, from_table, cols, where_clauses = self.get_where_clauses())
+        return self.count_encounter(
+            view_name, from_table, cols, where_clauses=self.get_where_clauses()
+        )
 
     def count_pcr(self, duration="week"):
         """
@@ -37,7 +39,9 @@ class CovidCountsBuilder(CountsBuilder):
             "gender",
             "race_display",
         ]
-        return self.count_encounter(view_name, from_table, cols, where_clauses = self.get_where_clauses())
+        return self.count_encounter(
+            view_name, from_table, cols, where_clauses=self.get_where_clauses()
+        )
 
     def count_study_period(self, duration="month"):
         """
@@ -55,7 +59,9 @@ class CovidCountsBuilder(CountsBuilder):
             "age_group",
             "race_display",
         ]
-        return self.count_encounter(view_name, from_table, cols, where_clauses = self.get_where_clauses())
+        return self.count_encounter(
+            view_name, from_table, cols, where_clauses=self.get_where_clauses()
+        )
 
     def count_prevalence_ed(self, duration="month"):
         view_name = self.get_table_name("count_prevalence_ed", duration)
