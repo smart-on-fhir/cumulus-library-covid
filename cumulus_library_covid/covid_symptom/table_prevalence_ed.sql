@@ -10,7 +10,7 @@ WITH from_period AS (
         age_at_visit,
         age_group,
         variant_era,
-        enc_class_code
+        enc_class_display
     FROM covid_symptom__study_period
     WHERE ed_note
 ),
@@ -24,7 +24,7 @@ join_2020 AS (
         p.age_at_visit,
         p.age_group,
         p.variant_era,
-        p.enc_class_code,
+        p.enc_class_display,
         p.subject_ref,
         p.encounter_ref,
         COALESCE(pcr.covid_pcr_result_display, 'None') AS covid_pcr_result,
