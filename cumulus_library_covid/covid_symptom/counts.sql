@@ -29,8 +29,9 @@ CREATE TABLE covid_symptom__count_dx_month AS (
         "ed_note",
         "variant_era"
     FROM powerset
-    WHERE 
+    WHERE
         cnt_subject >= 10
+        
 );
 
 -- ###########################################################
@@ -64,8 +65,9 @@ CREATE TABLE covid_symptom__count_dx_week AS (
         "ed_note",
         "variant_era"
     FROM powerset
-    WHERE 
+    WHERE
         cnt_subject >= 10
+        
 );
 
 -- ###########################################################
@@ -105,8 +107,9 @@ CREATE TABLE covid_symptom__count_pcr_month AS (
         "gender",
         "race_display"
     FROM powerset
-    WHERE 
+    WHERE
         cnt_subject >= 10
+        
 );
 
 -- ###########################################################
@@ -146,8 +149,9 @@ CREATE TABLE covid_symptom__count_pcr_week AS (
         "gender",
         "race_display"
     FROM powerset
-    WHERE 
+    WHERE
         cnt_subject >= 10
+        
 );
 
 -- ###########################################################
@@ -184,8 +188,9 @@ CREATE TABLE covid_symptom__count_study_period_month AS (
         "age_group",
         "race_display"
     FROM powerset
-    WHERE 
+    WHERE
         cnt_subject >= 10
+        
 );
 
 -- ###########################################################
@@ -222,8 +227,9 @@ CREATE TABLE covid_symptom__count_study_period_week AS (
         "age_group",
         "race_display"
     FROM powerset
-    WHERE 
+    WHERE
         cnt_subject >= 10
+        
 );
 
 -- ###########################################################
@@ -241,7 +247,7 @@ CREATE TABLE covid_symptom__count_symptom_week AS (
             "race_display",
             "enc_class_code",
             "ed_note"
-        FROM covid_symptom__symptom_nlp
+        FROM covid_symptom__symptom_ctakes_negation
         GROUP BY
             cube(
                 "author_week",
@@ -285,7 +291,7 @@ CREATE TABLE covid_symptom__count_symptom_month AS (
             "race_display",
             "enc_class_code",
             "ed_note"
-        FROM covid_symptom__symptom_nlp
+        FROM covid_symptom__symptom_ctakes_negation
         GROUP BY
             cube(
                 "author_month",

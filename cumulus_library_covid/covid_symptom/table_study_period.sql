@@ -16,11 +16,13 @@ SELECT DISTINCT
     s.encounter_ref,
     s.doc_ref,
     s.diff_enc_note_days,
+    s.enc_class_code,
     s.enc_class_display,
     s.doc_type_code,
     s.doc_type_display,
     s.ed_note, -- TODO https://github.com/smart-on-fhir/cumulus-library-covid/issues/10
-    a.age_group
+    a.age_group,
+    s.status
 FROM core__study_period AS s,
     covid_symptom__define_period AS v,
     covid_symptom__define_age AS a
