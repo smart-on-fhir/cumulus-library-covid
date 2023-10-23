@@ -28,6 +28,7 @@ SELECT DISTINCT
     o.lab_date AS covid_pcr_date,
     o.lab_week AS covid_pcr_week,
     o.lab_month AS covid_pcr_month,
+    s.status,
     s.variant_era,
     s.author_date,
     s.author_week,

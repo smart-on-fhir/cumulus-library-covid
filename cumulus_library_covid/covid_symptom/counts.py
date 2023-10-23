@@ -85,7 +85,7 @@ class CovidCountsBuilder(CountsBuilder):
         covid_symptom__count_symptom_month
         """
         view_name = self.get_table_name("count_symptom", duration)
-        from_table = self.get_table_name("symptom_nlp")
+        from_table = self.get_table_name("symptom_ctakes_negation")
         cols = [
             f"author_{duration}",
             "symptom_display",
@@ -115,4 +115,4 @@ class CovidCountsBuilder(CountsBuilder):
 
 if __name__ == "__main__":
     builder = CovidCountsBuilder()
-    builder.write_counts(f"{Path(__file__).resolve().parent}/count.sql")
+    builder.write_counts(f"{Path(__file__).resolve().parent}/counts.sql")

@@ -19,6 +19,7 @@ WITH define_dx AS (
 SELECT DISTINCT
     c.subject_ref,
     c.encounter_ref,
+    s.status,
     c.code AS cond_code, -- noqa: LT01,RF02
     c.recorded_week AS cond_week,
     c.recorded_month AS cond_month,

@@ -17,7 +17,7 @@
 
 -- ############################################################################
 
-CREATE TABLE covid_symptom__symptom_nlp AS
+CREATE TABLE covid_symptom__symptom_ctakes_negation AS
 WITH mention AS (
     SELECT
         t.concept,
@@ -51,7 +51,8 @@ SELECT DISTINCT
     s.gender,
     s.race_display,
     s.enc_class_display,
-    s.ed_note
+    s.ed_note,
+    s.status
 FROM mention AS m,
     covid_symptom__define_symptom_cui AS def,
     covid_symptom__study_period AS s
