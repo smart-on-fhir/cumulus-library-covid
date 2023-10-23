@@ -23,7 +23,7 @@ SELECT DISTINCT
     c.recorded_week AS cond_week,
     c.recorded_month AS cond_month,
     c.recorded_year AS cond_year,
-    s.enc_class_code,
+    s.enc_class_display,
     s.age_at_visit,
     s.ed_note,
     s.variant_era

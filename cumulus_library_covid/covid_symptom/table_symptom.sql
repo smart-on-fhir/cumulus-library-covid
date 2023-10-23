@@ -50,7 +50,7 @@ SELECT DISTINCT
     s.age_group,
     s.gender,
     s.race_display,
-    s.enc_class_code,
+    s.enc_class_display,
     s.ed_note
 FROM mention AS m,
     covid_symptom__define_symptom_cui AS def,
@@ -72,7 +72,7 @@ WITH temp_period AS (
         age_group,
         gender,
         race_display,
-        enc_class_code
+        enc_class_display
         AS ed_note
     FROM covid_symptom__study_period
 ),

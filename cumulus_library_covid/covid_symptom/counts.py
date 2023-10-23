@@ -14,7 +14,7 @@ class CovidCountsBuilder(CountsBuilder):
         from_table = self.get_table_name("dx")
         cols = [
             f"cond_{duration}",
-            "enc_class_code",
+            "enc_class_display",
             "age_at_visit",
             "ed_note",
             "variant_era",
@@ -75,7 +75,7 @@ class CovidCountsBuilder(CountsBuilder):
             "symptom_icd10_display",
             "variant_era",
             "age_group",
-            "enc_class_code",
+            "enc_class_display",
         ]
         return self.count_encounter(view_name, from_table, cols)
 
@@ -93,7 +93,7 @@ class CovidCountsBuilder(CountsBuilder):
             "age_group",
             "gender",
             "race_display",
-            "enc_class_code",
+            "enc_class_display",
             "ed_note",
         ]
         return self.count_encounter(view_name, from_table, cols)
