@@ -1,4 +1,5 @@
 """ util for sql view creation"""
+
 import ctakesclient
 
 

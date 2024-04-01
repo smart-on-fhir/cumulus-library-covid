@@ -1,4 +1,5 @@
 """ Utility classes for verifying/generating covid sql definitions"""
+
 from cumulus_library.schema.columns import Coding, Vocab
 from cumulus_library.library.schema.typesystem import Period
 from cumulus_library.library.schema.valueset import (
