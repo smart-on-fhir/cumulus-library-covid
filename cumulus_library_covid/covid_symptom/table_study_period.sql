@@ -1,12 +1,12 @@
 CREATE TABLE covid_symptom__study_period AS
 SELECT DISTINCT
     v.variant_era,
-    s.start_date,
-    s.start_week,
-    s.start_month,
-    s.end_date,
+    s.period_start_day as start_date,
+    s.period_start_week as start_week,
+    s.period_start_month as start_month,
+    s.period_end_day as end_date,
     s.age_at_visit,
-    s.author_date,
+    s.author_day as author_date,
     s.author_week,
     s.author_month,
     s.author_year,
@@ -14,7 +14,7 @@ SELECT DISTINCT
     s.race_display,
     s.subject_ref,
     s.encounter_ref,
-    s.doc_ref,
+    s.documentreference_ref,
     s.diff_enc_note_days,
     s.enc_class_code,
     s.enc_class_display,
@@ -29,8 +29,8 @@ FROM core__study_period AS s,
 WHERE
     s.age_at_visit = a.age
     AND s.gender IN ('female', 'male')
-    AND s.author_date BETWEEN v.variant_start AND v.variant_end
-    AND s.start_date BETWEEN v.variant_start AND v.variant_end
+    AND s.author_day BETWEEN v.variant_start AND v.variant_end
+    AND s.period_start_day BETWEEN v.variant_start AND v.variant_end
     AND s.diff_enc_note_days BETWEEN -30 AND 30;
 
 CREATE TABLE covid_symptom__meta_date AS

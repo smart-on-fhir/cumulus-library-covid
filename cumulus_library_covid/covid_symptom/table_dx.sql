@@ -21,9 +21,9 @@ SELECT DISTINCT
     c.encounter_ref,
     s.status,
     c.code AS cond_code, -- noqa: LT01,RF02
-    c.recorded_week AS cond_week,
-    c.recorded_month AS cond_month,
-    c.recorded_year AS cond_year,
+    c.recordeddate_week AS cond_week,
+    c.recordeddate_month AS cond_month,
+    c.recordeddate_year AS cond_year,
     s.enc_class_display,
     s.age_at_visit,
     s.ed_note,

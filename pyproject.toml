@@ -1,10 +1,10 @@
 [project]
 name = "cumulus-library-covid"
 requires-python = ">= 3.9"
-version = "0.2.2"
+version = "1.0.0"
 dependencies = [
-    "cumulus-library >= 1.4.0, <2",
-    "sqlfluff == 2.0.2"
+    "cumulus-library >= 2.0, <3",
+    "sqlfluff >= 3"
 ]
 description = "SQL generation for cumulus covid symptom analysis"
 readme = "README.md"
