@@ -28,7 +28,7 @@ build-backend = "flit_core.buildapi"
 
 [project.optional-dependencies]
 dev = [
-    "black > 24.3, <25",
+    "black >= 24.3, <25",
     "pylint",    
 ]
 
