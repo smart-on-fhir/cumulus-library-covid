@@ -32,7 +32,7 @@ join_2020 AS (
         COALESCE(pcr.covid_pcr_result_display, 'None') AS covid_pcr_result,
         COALESCE(dx.cond_code, 'None') AS covid_icd10,
         (dx.cond_code IS NOT NULL OR pcr.covid_pcr_result_display = 'POSITIVE')
-        AS covid_dx,
+            AS covid_dx,
         COALESCE(cn.symptom_display, 'None') AS covid_symptom,
         COALESCE(icd10.icd10_display, 'None') AS symptom_icd10_display
     FROM study_period AS p

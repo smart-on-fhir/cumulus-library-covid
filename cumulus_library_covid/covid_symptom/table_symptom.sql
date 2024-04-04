@@ -73,8 +73,7 @@ WITH temp_period AS (
         age_group,
         gender,
         race_display,
-        enc_class_display
-        AS ed_note
+        enc_class_display AS ed_note
     FROM covid_symptom__study_period
 ),
 

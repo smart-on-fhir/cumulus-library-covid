@@ -17,4 +17,4 @@ FROM (
     ('delta', date('2021-06-21'), date('2021-12-19')),
     ('omicron', date('2021-12-20'), date('2022-06-01'))
 )
-AS t (variant_era, variant_start, variant_end);
+    AS t (variant_era, variant_start, variant_end);

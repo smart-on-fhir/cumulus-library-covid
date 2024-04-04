@@ -528,4 +528,4 @@ FROM (
     ('C0242429', 'T184', '162397003', 'SNOMEDCT_US', 'dynophagia', 'Sore throat'),
     ('C0242429', 'T184', 'R07.0', 'ICD10CM', 'R07.0', 'Sore throat')
 )
-AS t (cui, tui, code, code_system, text, pref);
+    AS t (cui, tui, code, code_system, text, pref);
