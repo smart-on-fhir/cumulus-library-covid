@@ -43,8 +43,8 @@ SELECT DISTINCT
     s.encounter_ref,
     m.docref_id,
     def.pref AS symptom_display,
-    s.start_date AS start_date,
-    s.end_date AS end_date,
+    s.start_date,
+    s.end_date,
     s.author_week,
     s.author_month,
     s.age_group,
@@ -73,8 +73,7 @@ WITH temp_period AS (
         age_group,
         gender,
         race_display,
-        enc_class_display
-        AS ed_note
+        enc_class_display AS ed_note
     FROM covid_symptom__study_period
 ),
 

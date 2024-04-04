@@ -61,4 +61,4 @@ FROM
             'Emergency department Consult note'
         )
     )
-    AS t (from_system, from_code, from_display, system, code, display); --noqa: AL05
+        AS t (from_system, from_code, from_display, system, code, display); --noqa: AL05

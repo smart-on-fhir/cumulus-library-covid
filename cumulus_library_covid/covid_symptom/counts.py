@@ -1,5 +1,5 @@
 from pathlib import Path
-from cumulus_library.schema.counts import CountsBuilder
+from cumulus_library.statistics.counts import CountsBuilder
 
 
 class CovidCountsBuilder(CountsBuilder):
@@ -98,7 +98,7 @@ class CovidCountsBuilder(CountsBuilder):
         ]
         return self.count_encounter(view_name, from_table, cols)
 
-    def prepare_queries(self, cursor=None, schema=None):
+    def prepare_queries(self, cursor=None, schema=None, **kwargs):
         self.queries = [
             self.count_dx("month"),
             self.count_dx("week"),

@@ -24,10 +24,10 @@ WITH obs_interpret AS (
 
 SELECT DISTINCT
     obs_interpret.display AS covid_pcr_result_display,
-    o.lab_code AS covid_pcr_code,
-    o.lab_date AS covid_pcr_date,
-    o.lab_week AS covid_pcr_week,
-    o.lab_month AS covid_pcr_month,
+    o.observation_code AS covid_pcr_code,
+    o.effectivedatetime_day AS covid_pcr_date,
+    o.effectivedatetime_week AS covid_pcr_week,
+    o.effectivedatetime_month AS covid_pcr_month,
     s.status,
     s.variant_era,
     s.author_date,
@@ -51,9 +51,9 @@ FROM core__observation_lab AS o,
 WHERE
     (s.encounter_ref = o.encounter_ref)
     AND (s.variant_era = p.variant_era)
-    AND (o.lab_week BETWEEN p.variant_start AND p.variant_end)
-    AND (o.lab_code.code = pcr.code)
-    AND (o.lab_result.code = obs_interpret.code);
+    AND (o.effectivedatetime_week BETWEEN p.variant_start AND p.variant_end)
+    AND (o.observation_code = pcr.code)
+    AND (o.valuecodeableconcept_code = obs_interpret.code);
 
 -- TODO Cerner specific handling of lab RESULT
 -- https://github.com/smart-on-fhir/cumulus-library-covid/issues/13
