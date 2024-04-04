@@ -1,12 +1,12 @@
 CREATE TABLE covid_symptom__study_period AS
 SELECT DISTINCT
     v.variant_era,
-    s.period_start_day as start_date,
-    s.period_start_week as start_week,
-    s.period_start_month as start_month,
-    s.period_end_day as end_date,
+    s.period_start_day AS start_date,
+    s.period_start_week AS start_week,
+    s.period_start_month AS start_month,
+    s.period_end_day AS end_date,
     s.age_at_visit,
-    s.author_day as author_date,
+    s.author_day AS author_date,
     s.author_week,
     s.author_month,
     s.author_year,
