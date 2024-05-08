@@ -1,6 +1,6 @@
 [project]
 name = "cumulus-library-covid"
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 version = "1.0.0"
 dependencies = [
     "cumulus-library >= 2.0, <3",
@@ -17,7 +17,7 @@ classifiers = [
 ]
 
 [project.urls]
-Home = "https://smarthealthit.org/cumulus-a-universal-sidecar-for-a-smart-learning-healthcare-system/"
+Home = "https://smarthealthit.org/cumulus"
 Documentation = "https://docs.smarthealthit.org/cumulus/"
 Source = "https://github.com/smart-on-fhir/cumulus-library-covid"
 
