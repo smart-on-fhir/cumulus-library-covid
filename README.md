@@ -1,15 +1,17 @@
 # Cumulus Library - Covid
 
-A collection of tables for generating bioinfomatics data for studying COVID-19 symptoms. 
-Part of the [SMART on FHIR Cumulus Project](https://smarthealthit.org/cumulus-a-universal-sidecar-for-a-smart-learning-healthcare-system/)
+A collection of tables for generating bioinformatics data for studying COVID-19 symptoms.
+Part of the [SMART on FHIR Cumulus Project](https://smarthealthit.org/cumulus/).
 
-For more information, [browse the documentation](https://docs.smarthealthit.org/cumulus/library).
+For more information, browse the [Cumulus Library documentation](https://docs.smarthealthit.org/cumulus/library).
 
 ## Usage
 
 To install the module, simply run `pip install cumulus-library-covid`.
 
-This will add a `covid_symptoms` study target to `cumulus-library`.
+This will add a `covid_symptom` study target to `cumulus-library`.
+
+See [RUNNING.md](RUNNING.md) for more details.
 
 ## Publications
 
