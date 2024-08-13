@@ -17,7 +17,9 @@ WITH documented_encounter AS (
         ce.encounter_ref,
         ce.status,
         cdr.documentreference_ref,
-        date_diff('day', ce.period_start_day, date(cdr.author_day)) AS diff_enc_note_days,
+        date_diff(
+            'day', ce.period_start_day, date(cdr.author_day)
+        ) AS diff_enc_note_days,
         coalesce(ce.class_code, 'None') AS enc_class_code,
         coalesce(ce.class_display, 'None') AS enc_class_display,
         coalesce(cdr.type_code, 'None') AS doc_type_code,
@@ -33,33 +35,34 @@ WITH documented_encounter AS (
         AND (ce.period_start_day BETWEEN date('2016-06-01') AND current_date)
         AND (ce.period_end_day BETWEEN date('2016-06-01') AND current_date)
 ),
+
 encounter_with_note AS (
-SELECT
-    de.period_start_day,
-    de.period_start_week,
-    de.period_start_month,
-    de.period_end_day,
-    de.age_at_visit,
-    de.author_day,
-    de.author_week,
-    de.author_month,
-    de.author_year,
-    de.gender,
-    de.race_display,
-    de.ethnicity_display,
-    de.subject_ref,
-    de.encounter_ref,
-    de.status,
-    de.documentreference_ref,
-    de.diff_enc_note_days,
-    de.enc_class_code,
-    de.enc_class_display,
-    de.doc_type_code,
-    de.doc_type_display,
-    coalesce(ed.code IS NOT NULL, FALSE) AS ed_note
-FROM documented_encounter AS de
-LEFT JOIN core__ed_note AS ed
-    ON de.doc_type_code = ed.from_code
+    SELECT
+        de.period_start_day,
+        de.period_start_week,
+        de.period_start_month,
+        de.period_end_day,
+        de.age_at_visit,
+        de.author_day,
+        de.author_week,
+        de.author_month,
+        de.author_year,
+        de.gender,
+        de.race_display,
+        de.ethnicity_display,
+        de.subject_ref,
+        de.encounter_ref,
+        de.status,
+        de.documentreference_ref,
+        de.diff_enc_note_days,
+        de.enc_class_code,
+        de.enc_class_display,
+        de.doc_type_code,
+        de.doc_type_display,
+        coalesce(ed.code IS NOT NULL, FALSE) AS ed_note
+    FROM documented_encounter AS de
+    LEFT JOIN core__ed_note AS ed
+        ON de.doc_type_code = ed.from_code
 )
 
 SELECT DISTINCT
@@ -83,7 +86,7 @@ SELECT DISTINCT
     e.enc_class_display,
     e.doc_type_code,
     e.doc_type_display,
-    e.ed_note, 
+    e.ed_note,
     a.age_group,
     e.status
 FROM encounter_with_note AS e,

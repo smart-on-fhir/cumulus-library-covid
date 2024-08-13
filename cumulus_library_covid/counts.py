@@ -1,6 +1,7 @@
 from pathlib import Path
-from cumulus_library.statistics.counts import CountsBuilder
+
 from cumulus_library import base_utils, study_manifest
+from cumulus_library.statistics.counts import CountsBuilder
 
 
 class CovidCountsBuilder(CountsBuilder):
@@ -100,10 +101,7 @@ class CovidCountsBuilder(CountsBuilder):
         return self.count_encounter(view_name, from_table, cols)
 
     def prepare_queries(
-        self, 
-        config:base_utils.StudyConfig,
-        manifest:study_manifest.StudyManifest,
-        **kwargs
+        self, config: base_utils.StudyConfig, manifest: study_manifest.StudyManifest, **kwargs
     ):
         self.queries = [
             self.count_dx("month"),
