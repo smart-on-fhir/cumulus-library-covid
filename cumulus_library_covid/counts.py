@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from cumulus_library import base_utils, study_manifest
 from cumulus_library.statistics.counts import CountsBuilder
 
 
