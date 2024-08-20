@@ -32,7 +32,7 @@ jobs:
       - name: Run sqlfluff on jinja templates
         run: |
           sqlfluff lint
-            - name: Run ruff
+      - name: Run ruff
         if: success() || failure() # still run ruff if above checks fails
         run: |
           ruff check

@@ -101,7 +101,7 @@ class CovidCountsBuilder(CountsBuilder):
         return self.count_encounter(view_name, from_table, cols)
 
     def prepare_queries(
-        self, config: base_utils.StudyConfig, manifest: study_manifest.StudyManifest, **kwargs
+        self, *args, **kwargs
     ):
         self.queries = [
             self.count_dx("month"),
