@@ -1,9 +1,9 @@
 [project]
 name = "cumulus-library-covid"
-requires-python = ">= 3.10"
-version = "1.0.0"
+requires-python = ">= 3.11"
+version = "2.0.0"
 dependencies = [
-    "cumulus-library >= 2.0, <3",
+    "cumulus-library >= 3.0, <4",
     "sqlfluff >= 3"
 ]
 description = "SQL generation for cumulus covid symptom analysis"
@@ -28,9 +28,26 @@ build-backend = "flit_core.buildapi"
 
 [project.optional-dependencies]
 dev = [
-    "black >= 24.3, <25",
+    # if you update the ruff version, also update .pre-commit-config.yaml
+    "ruff < 0.6",
     "pylint",    
 ]
 
 [tool.flit.sdist]
 include = ["covid_symptom/"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+allowed-confusables = ["’"]  # allow proper apostrophes
+select = [
+    "A",  # prevent using keywords that clobber python builtins
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "I",  # isort
+    "PLE",  # pylint errors
+    "RUF",  # the ruff developer's own rules
+    "S",  # bandit security warnings
+    "UP",  # alert you when better syntax is available in your python version
+]

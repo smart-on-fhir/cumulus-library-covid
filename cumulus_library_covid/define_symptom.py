@@ -1,4 +1,4 @@
-""" util for sql view creation"""
+"""util for sql view creation"""
 
 import ctakesclient
 
@@ -15,7 +15,7 @@ def main():
 
     table_cols = "AS t (cui, tui, code, system, text, pref);"
     create_view = (
-        "create or replace view covid_symptom__define_symptom as "
+        "create or replace view covid_symptom__define_symptom as "  # noqa: S608
         f"select * from (VALUES \n {values_sql}) \n {table_cols}"
     )
 
