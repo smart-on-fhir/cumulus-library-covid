@@ -1,12 +1,10 @@
 [project]
 name = "cumulus-library-covid"
 requires-python = ">= 3.11"
-version = "2.0.0"
 dependencies = [
     "cumulus-library >= 3.0, <4",
     "sqlfluff >= 3"
 ]
-description = "SQL generation for cumulus covid symptom analysis"
 readme = "README.md"
 license = { text="Apache License 2.0" }
 classifiers = [
@@ -15,6 +13,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+dynamic = ["description", "version"]
 
 [project.urls]
 Home = "https://smarthealthit.org/cumulus"
@@ -30,11 +29,7 @@ build-backend = "flit_core.buildapi"
 dev = [
     # if you update the ruff version, also update .pre-commit-config.yaml
     "ruff < 0.6",
-    "pylint",    
 ]
-
-[tool.flit.sdist]
-include = ["covid_symptom/"]
 
 [tool.ruff]
 line-length = 100
