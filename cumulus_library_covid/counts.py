@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from cumulus_library.statistics.counts import CountsBuilder
+import cumulus_library
 
 
-class CovidCountsBuilder(CountsBuilder):
+class CovidCountsBuilder(cumulus_library.CountsBuilder):
     display_text = "Creating covid counts..."
 
     def count_dx(self, duration="week"):
