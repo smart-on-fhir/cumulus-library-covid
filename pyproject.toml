@@ -30,6 +30,10 @@ dev = [
     # if you update the ruff version, also update .pre-commit-config.yaml
     "ruff < 0.6",
 ]
+tests = [
+    "duckdb",
+    "pandas",
+]
 
 [tool.ruff]
 line-length = 100
@@ -46,3 +50,5 @@ select = [
     "S",  # bandit security warnings
     "UP",  # alert you when better syntax is available in your python version
 ]
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S"]  # tests do suspicious stuff that's fine, actually

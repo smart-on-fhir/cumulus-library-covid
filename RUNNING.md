@@ -43,7 +43,9 @@ You should now have all the interesting results sitting in Athena.
 
 In Athena's web console, run these commands and download the CSV results,
 using the given filenames (we will refer back to these filenames later):
-- **ctakes.csv**: `select encounter_ref, symptom_display from covid_symptom__symptom_ctakes_negation`
+- **ctakes.csv** (if you ran cTAKES): `select encounter_ref, symptom_display from covid_symptom__symptom_ctakes_negation`
+- **gpt35.csv** (if you ran ChatGPT 3.5): `select encounter_ref, symptom_display from covid_symptom__symptom_gpt35`
+- **gpt4.csv** (if you ran ChatGPT 4): `select encounter_ref, symptom_display from covid_symptom__symptom_gpt4`
 - **docrefs.csv**: `select distinct docref_id from covid_symptom__symptom_ctakes_negation`
 - **icd10.csv**: `select encounter_ref, substring(icd10_display, 7) as symptom_display from covid_symptom__symptom_icd10`
 
@@ -115,7 +117,7 @@ Save this file as `labelstudio-export.json` in a new folder.
 ## 8. Set up `chart-review`
 
 - Run `pip install chart-review`
-- Copy `ctakes.csv` and `icd10.csv` from step 3 above into the same folder
+- Copy the `.csv` files from step 3 above into the same folder
   you used for `labelstudio-export.json` above (the "chart review folder").
 - Add a new `config.yaml` file in that folder:
 ```yaml
@@ -137,6 +139,10 @@ annotators:
   human2: 2
   ctakes:
     filename: ctakes.csv
+  gpt35:
+    filename: gpt35.csv
+  gpt4:
+    filename: gpt4.csv
   icd10:
     filename: icd10.csv
 ```

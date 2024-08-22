@@ -1,5 +1,10 @@
 study_prefix = "covid_symptom"
 
+[table_builder_config]
+file_names = [
+    "builder_gpt.py",
+]
+
 [sql_config]
 file_names = [
 #    "define_age_pediatric.sql",
